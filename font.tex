@@ -1,0 +1,67 @@
+% \DeclareSymbolFont{arrows}{OT1}{NewComputerModernMath}{m}{n}
+% \SetSymbolFont{arrows}{bold}{OT1}{NewComputerModernMath}{b}{n}
+\setmainfont{MinionPro}[
+  Extension = .otf,
+  Ligatures={TeX, Common},
+  Numbers={OldStyle, Proportional},
+  UprightFont = *-regular,
+  ItalicFont = *-It,
+  BoldFont = *-bold,
+  Kerning=On,
+  SizeFeatures = {
+    {Size = -9, Font = *-capt},
+    {Size = 9-13.01, Font = *-regular},
+    {Size = 13.01-19.91, Font = *-subh},
+    {Size = 19.91-, Font = *-disp}
+    },
+  SlantedFeatures = {Font = *-regular, FakeSlant = .15},
+  BoldSlantedFeatures = {*-bold, FakeSlant = .15}
+]
+\setmathfont{MinionMath-Regular.otf}[
+  SizeFeatures = {
+    {Size = -6, Font = MinionMath-Tiny.otf,
+        Style = MathScriptScript},
+    {Size = 6-8.4, Font = MinionMath-Capt.otf,
+        Style = MathScript},
+    {Size = 8.4-13, Font = MinionMath-Regular,
+        Style = MathScript},
+    {Size = 13-, Font = MinionMath-Subh.otf},
+    },
+]
+\setmathfont[version = bold]{MinionMath-Bold.otf}[
+  SizeFeatures = {
+      {Size = -6, Font = MinionMath-Bold.otf,
+          Style = MathScriptScript},
+      {Size = 6-8.4, Font = MinionMath-Bold.otf,
+          Style = MathScript},
+      {Size = 8.4-13, Font = MinionMath-Bold,
+          Style = MathScript},
+      {Size = 13-, Font = MinionMath-BoldSubh.otf},
+    },
+]
+
+\DeclareMathAlphabet{\panscr}{U}{rsfs}{m}{n}
+\DeclareMathAlphabet{\mycal}{OMS}{cmsy}{m}{n}
+\DeclareMathAlphabet{\mybcal}{OMS}{cmsy}{b}{n}
+% \DeclareMathAlphabet{\symcal}{OMS}{cmsy}{m}{n}
+% \DeclareSymbolFont{cmsy}{OMS}{cmsy}{m}{n}
+% \DeclareSymbolFontAlphabet{\symcal}{cmsy}
+\setmathfont[range = {tt}, Scale = MatchUppercase ]{Garamond-Math.otf}
+\setmathfont[range = sfup]{Garamond-Math.otf}
+% \setmathfont[range={up/Greek,"2211, "220F, cal, bfcal}]{Neo Euler.otf}
+\setmathfont[range={bfsfit/{greek, Greek},frak,scr}]{Garamond-Math.otf}
+\setmathfont[range={"222B,"222C,"222D},StylisticSet ={7,9}]{Garamond-Math.otf}
+\setmathfont[range={"2192,"21A6,"21AA,"2972}]{NewComputerModernMath}
+\setmathfont[range={}]{MinionMath-Regular.otf}
+% \setmathfont[range={"2B47"}]{NewCM10-Book.otf}
+\renewcommand\.{\mathchoice{\mkern2mu}{\mkern2mu}{\mkern1mu}{\mkern1mu}}
+\setCJKmainfont{方正新书宋.TTF}[
+  ItalicFont = STKAITI.TTF,
+  BoldFont = 方正粗雅宋_GBK,
+]
+\setCJKsansfont{苹方黑体-细-简.ttf}[
+  BoldFont = 苹方黑体-细-简.ttf
+]
+\setsansfont{苹方黑体-细-简.ttf}[
+  BoldFont = 苹方黑体-细-简.ttf
+]
