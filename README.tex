@@ -2,6 +2,7 @@
 \usepackage{listings}
 \usepackage{xparse}
 \usepackage{fbox}
+\usepackage{amsmath,amssymb,amsfonts}
 
 \lstset{
 	basicstyle=\small\ttfamily,
@@ -16,7 +17,7 @@
 \begin{lstlisting}
 \begin{daily}[类型][日期][星级][标题]
 	正文
-\end{daily}
+\end{daily}\usepackage{unicode-math}
 \end{lstlisting}
 其中类型如下:
 \begin{quote}
@@ -32,11 +33,30 @@
 	\end{itemize}
 	\ExplSyntaxOff
 \end{quote}
+
+
 \begin{daily}[类型][日期][星级][标题]
 	正文
 \end{daily}
-\begin{daily}[theorem][theorems][theoremv][theoremt]
-	正文
+
+
+\begin{daily}[20240402][2][解析函数的一个刻画]
+	令$\mathbb I$是$\mathbb R$中的某开区间，令$f\in C^\infty(\mathbb  I)$，称其在$x_0$处解析，若在$x_0$某邻域内下式成立：
+	$$
+	f(x) = \sum_{n\geqslant0} a_n(x-x_0)^n.
+	$$
+	记为$f\in C^\omega(x_0)$。任给$E\subset \mathbb I$，定义$C^\omega(E)=\bigcap_{x\in E}C^\omega(x)$。
+
+	现在证明：
+	\begin{enumerate}
+		\item 倘若 $$ \sup_{n\geqslant 1} \frac1n \log\Bigl(\frac{\sup_{x\in \mathbb I}|f^{(n)}(x)|}{n!}\Bigr)<\infty. $$ 那么$f\in C^\omega(\mathbb I)$。
+		\item 倘若 $f\in C^\omega(x_0)$，那么在$x_0$的某邻域$J$内，下式成立：$$ \sup_{n\geqslant 1} \frac1n \log\Bigl(\frac{\sup_{x\in J}|f^{(n)}(x)|}{n!}\Bigr)<\infty. $$
+		\item 证明以下解析函数的刻画：
+			\begin{enumerate}
+				\item 第二款的逆命题；
+				\item $f\in C^\omega(\mathbb I)$当且仅当任给$[\alpha,\beta]\in \mathbb I$，均有 $$ \sup_{n\geqslant 1} \frac1n \log\Bigl(\frac{\sup_{\alpha<x<\beta}|f^{(n)}(x)|}{n!}\Bigr)<\infty. $$
+			\end{enumerate}
+	\end{enumerate}
 \end{daily}
 
 
@@ -50,4 +70,25 @@
 % \scalebox{.3}{\makebox[1ex]{\tikz{\node[star, star point ratio=2.5, draw, fill=red]at (1,1) {};}}} wrtqbjzxbnkgb h
 \end{document}
 
+\NewDocumentEnvironment { myenvironment } { O{} }
+{
+	\begin{center}
+		\tl_if_empty:nTF { #1 }
+		{ \textbf{No~parameters~provided.} }
+		{
+			\tl_if_single:nTF { #1 }
+			{ \textbf{Title:}~#1 }
+			{
+				\seq_set_split:Nnn \l_tmpa_seq { , } { #1 }
+				\seq_pop_left:NN \l_tmpa_seq \l_tmpa_tl
+				\seq_if_empty:NTF \l_tmpa_seq
+				{ \textbf{Title:}~\l_tmpa_tl }
+				{ \textbf{Title:}~\l_tmpa_tl , \textbf{Author:}~\seq_use:Nn \l_tmpa_seq { , ~ } }
+			}
+		}
+		}
+		{
+	\end{center}
+}
 
+\ExplSyntaxOff

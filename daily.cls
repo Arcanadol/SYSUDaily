@@ -12,7 +12,7 @@
 \usepackage[svgnames]{xcolor}
 \usepackage[skins,most]{tcolorbox}
 \usepackage{mathtools}
-\usepackage{unicode-math}
+
 % \defaultfontfeatures{Mapping=tex-text}
 \usepackage{fixdif}
 \usepackage{xfp}
@@ -95,7 +95,7 @@
 % }
 % \textoverset{}
 \setlength{\fboxrule}{0.2pt}
-\newcommand{\dateread} [8] {\smash{\fbox{{\footnotesize#5#6}\llap{{\raisebox{5pt}{{\fontsize{3.2}{4}\selectfont#1 #2 #3 #4\kern-0.5em}}}}{/\kern-0.1em#7#8}}}}
+% \newcommand{\dateread} [8] {#5#6/#1#2#3#4/#7#8}
 
 \newcommand{\putstars} [2] {%
   \begin{tcbclipinterior}
@@ -133,7 +133,7 @@
   mathstyles = #1,%
   title      = {\bfseries\IfBlankTF{#4}{\vphantom{空}}{%
         \ShowSYSUdailyname{#1}\the\value{pancounter}\stepcounter{pancounter}：#4%
-      }\hfill{\ifx#2\empty\else\expandafter\dateread#2\fi}},%
+      }\hfill{\ifx#2\empty\else\expandafter\SYSUdailyParameterDate\fi}},%
   watermark text = {\SYSUdailywatermark},%
   underlay    = {\putstars{#3}{#1}},%
   fonttitle = {},
@@ -154,13 +154,13 @@
 %     \BODY
 %   \end{SYSUdaily}
 % }
+\ExplSyntaxOn
 
-\def\SYSUdailyParameterMathStyles{proposition}
-\def\SYSUdailyParameterDate{12345678}
+\def\SYSUdailyParameterMathStyles{proposition}\csname c@month\endcsname
+\expandafter\expandafter\def\expandafter\SYSUdailyParameterDate{\the\year\ifnum\month<10{0}\the\month\else\the\month\fi\ifnum\day<10{0}\the\day\else\the\day\fi}
 \def\SYSUdailyParameterDifficulty{0}
 \def\SYSUdailyParameterTitle{}
 
-\ExplSyntaxOn
 
 \NewDocumentCommand{\SYSUdailycheck}{mm}{
   \clist_if_in:NnTF \c_math_styles_clist {#1}
@@ -176,7 +176,6 @@
       { \cs_set:cpn { #2check } { Date } }
       {
         \int_compare:nTF {
-          #1 > 0
           #1 < 5
         }
         { \cs_set:cpn { #2check } { Difficulty } }
@@ -188,104 +187,66 @@
 }
 \NewDocumentEnvironment{daily}{oooo+b}{
 
-\IfNoValueTF{#4}{
-  \IfNoValueTF{#3}{
-    \IfNoValueTF{#2}{
-      \IfNoValueTF{#1}{}{
-        \def\SYSUdailyParameters{1}
-      }
-    }{ \def\SYSUdailyParameters{2} }
-  }{ \def\SYSUdailyParameters{3} }
-}{ \def\SYSUdailyParameters{4} }
+  \IfNoValueTF{#4}{
+    \IfNoValueTF{#3}{
+      \IfNoValueTF{#2}{
+        \IfNoValueTF{#1}{}{
+          \def\SYSUdailyParameters{1}
+        }
+      }{ \def\SYSUdailyParameters{2} }
+    }{ \def\SYSUdailyParameters{3} }
+  }{ \def\SYSUdailyParameters{4} }
 
+  \ifnum\SYSUdailyParameters=1
+    \SYSUdailycheck{ #1 }{ I }
+    \cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
+  \else
+  \fi
 
+  \ifnum\SYSUdailyParameters=2
+    \SYSUdailycheck{ #1 }{ I }
+    \SYSUdailycheck{ #2 }{ II }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
+  \else
+  \fi
 
-\SYSUdailyParameters
+  \ifnum\SYSUdailyParameters=3
+    \SYSUdailycheck{ #1 }{ I }
+    \SYSUdailycheck{ #2 }{ II }
+    \SYSUdailycheck{ #3 }{ III }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IIIcheck } }{ #3 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
+  \else
+  \fi
 
-\ifnum\SYSUdailyParameters=1
-  \SYSUdailycheck{ #1 }{ I }
-  \cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
-\else
-\fi
+  \ifnum\SYSUdailyParameters=4
+    \SYSUdailycheck{ #1 }{ I }
+    \SYSUdailycheck{ #2 }{ II }
+    \SYSUdailycheck{ #3 }{ III }
+    \SYSUdailycheck{ #4 }{ IV }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IVcheck } }{ #4 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IIIcheck } }{ #3 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
+    \cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
+  \else
+  \fi
 
-\ifnum\SYSUdailyParameters=2
-\SYSUdailycheck{ #1 }{ I }
-\SYSUdailycheck{ #2 }{ II }
-\cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
-\cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
-\else
-\fi
+  \hbox_set:Nn \l_tmpa_box {
+    \begin{minipage}{\SYSUdailywidth}
+      \itshape #5
+    \end{minipage}
+  }
 
-\ifnum\SYSUdailyParameters=3
-\SYSUdailycheck{ #1 }{ I }
-\SYSUdailycheck{ #2 }{ II }
-\SYSUdailycheck{ #3 }{ III }
-\cs_set:cpn { SYSUdailyParameter \use:c { IIIcheck } }{ #3 }
-\cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
-\cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
-\else
-\fi
+  \dim_set:Nn \l_tmpa_dim {\box_ht:N \l_tmpa_box}
 
-\ifnum\SYSUdailyParameters=4
-\SYSUdailycheck{ #1 }{ I }
-\SYSUdailycheck{ #2 }{ II }
-\SYSUdailycheck{ #3 }{ III }
-\SYSUdailycheck{ #4 }{ IV }
-\cs_set:cpn { SYSUdailyParameter \use:c { IVcheck } }{ #4 }
-\cs_set:cpn { SYSUdailyParameter \use:c { IIIcheck } }{ #3 }
-\cs_set:cpn { SYSUdailyParameter \use:c { IIcheck } }{ #2 }
-\cs_set:cpn { SYSUdailyParameter \use:c { Icheck } }{ #1 }
-\else
-\fi
-
-\hbox_set:Nn \l_tmpa_box {
-  \begin{minipage}{\SYSUdailywidth}
-    \itshape #5
-  \end{minipage}
-}
-
-\dim_set:Nn \l_tmpa_dim {\box_ht:N \l_tmpa_box}
-
-\dim_compare:nTF {\l_tmpa_dim > 26pt} {
-  \renewcommand{\SYSUdailywatermark}{\bfseries 笃学笃行，不悔不倦。}
-  \def\SYSUdailyright{2mm}
-}{}
-\par
-\SYSUdailyParameterDate
-\SYSUdaily{\SYSUdailyParameterMathStyles}{\SYSUdailyParameterDate}{\SYSUdailyParameterDifficulty}{\SYSUdailyParameterTitle}
-
-% \clist_if_in:NnTF \c_math_styles_clist {#1}
-% {
-%   \regex_match:nnTF { ^[+-]?\d+$ } {#2}
-%   {
-%     \int_compare:nTF { #2 > 10000000 }
-%     { \int_compare:nTF { #2 < 99999999 }
-%       {
-%         \regex_match:nnTF { ^[+-]?\d+$ } {#3}
-%         { \SYSUdaily{#1}{#2}{\fpeval{min(3,#3)}}{#4} }
-%         { \SYSUdaily{#1}{#2}{0}{#4} }
-%       }
-%       { \SYSUdaily{#1}{}{\fpeval{min(3,#2)}}{#3} }
-%     }
-%     { \SYSUdaily{#1}{}{\fpeval{min(3,#2)}}{#3} }
-%   }
-%   { \SYSUdaily{#1}{}{0}{#2} }
-% }
-% {
-%   \regex_match:nnTF { ^[+-]?\d+$ } {#1}
-%   {
-%     \int_compare:nTF { #1 > 10000000 } {
-%       \int_compare:nTF { #1 < 99999999 }
-%       {
-%         \regex_match:nnTF { ^[+-]?\d+$ } {#2}
-%         { \SYSUdaily{proposition}{#1}{\fpeval{min(3,#2)}}{#3} }
-%         { \SYSUdaily{proposition}{#1}{0}{#4} }
-%       }{ \SYSUdaily{proposition}{}{\fpeval{min(3,#1)}}{#2} }
-%     }{ \SYSUdaily{proposition}{}{\fpeval{min(3,#1)}}{#2} }
-%   }
-%   { \SYSUdaily{proposition}{}{0}{#1} }
-% }
-#5
+  \dim_compare:nTF {\l_tmpa_dim > 26pt} {
+    \renewcommand{\SYSUdailywatermark}{\bfseries 笃学笃行，不悔不倦。}
+    \def\SYSUdailyright{2mm}
+  }{}
+  \SYSUdaily{\SYSUdailyParameterMathStyles}{\SYSUdailyParameterDate}{\SYSUdailyParameterDifficulty}{\SYSUdailyParameterTitle}
+  #5
 }
 { \endSYSUdaily }
 \ExplSyntaxOff
