@@ -61,7 +61,6 @@
 
 \ExplSyntaxOn
 \clist_new:N \c_math_styles_clist
-% \clist_set:Nn \c_math_styles_clist {empty}
 \NewDocumentCommand{\Addmathstyles}{mO{}O{0,0,0}}{
 \clist_put_right:Nn \c_math_styles_clist { #1 }
 \cs_new:cpn { SYSUdaily#1name } { #2 }
@@ -131,7 +130,7 @@
 
 \newtcolorbox{SYSUdaily}[4]{%
   mathstyles = #1,%
-  title      = {\bfseries\IfBlankTF{#4}{\vphantom{空}}{%
+  title      = {\bfseries\expandafter\IfBlankTF{#4}{\vphantom{空}}{%
         \ShowSYSUdailyname{#1}\the\value{pancounter}\stepcounter{pancounter}：#4%
       }\hfill{\ifx#2\empty\else\expandafter\SYSUdailyParameterDate\fi}},%
   watermark text = {\SYSUdailywatermark},%
@@ -156,10 +155,10 @@
 % }
 \ExplSyntaxOn
 
-\def\SYSUdailyParameterMathStyles{proposition}\csname c@month\endcsname
-\expandafter\expandafter\def\expandafter\SYSUdailyParameterDate{\the\year\ifnum\month<10{0}\the\month\else\the\month\fi\ifnum\day<10{0}\the\day\else\the\day\fi}
+\def\SYSUdailyParameterMathStyles{proposition}
+\def\SYSUdailyParameterDate{\the\year\ifnum\month<10{0}\the\month\else\the\month\fi\ifnum\day<10{0}\the\day\else\the\day\fi}
 \def\SYSUdailyParameterDifficulty{0}
-\def\SYSUdailyParameterTitle{}
+\let\SYSUdailyParameterTitle\empty
 
 
 \NewDocumentCommand{\SYSUdailycheck}{mm}{
@@ -190,7 +189,9 @@
   \IfNoValueTF{#4}{
     \IfNoValueTF{#3}{
       \IfNoValueTF{#2}{
-        \IfNoValueTF{#1}{}{
+        \IfNoValueTF{#1}{
+          \def\SYSUdailyParameters{0}
+        }{
           \def\SYSUdailyParameters{1}
         }
       }{ \def\SYSUdailyParameters{2} }
@@ -245,8 +246,20 @@
     \renewcommand{\SYSUdailywatermark}{\bfseries 笃学笃行，不悔不倦。}
     \def\SYSUdailyright{2mm}
   }{}
-  \SYSUdaily{\SYSUdailyParameterMathStyles}{\SYSUdailyParameterDate}{\SYSUdailyParameterDifficulty}{\SYSUdailyParameterTitle}
-  #5
-}
-{ \endSYSUdaily }
+  % \use:c { Icheck }
+  % \use:c { IIcheck }
+  % \use:c { IIIcheck }
+  % \use:c { IVcheck }
+
+
+  % \expandafter\IfBlankTF{\SYSUdailyParameterTitle}{T}{F}
+  % \SYSUdailyParameterMathStyles
+  % \SYSUdailyParameterTitle
+  % \SYSUdailyParameterDate
+  % \SYSUdailyParameterDifficulty
+
+  \exp_args:Noooo \SYSUdaily \SYSUdailyParameterMathStyles \SYSUdailyParameterDate \SYSUdailyParameterDifficulty \SYSUdailyParameterTitle
+    #5
+    }
+    { \endSYSUdaily }
 \ExplSyntaxOff
