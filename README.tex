@@ -1,5 +1,8 @@
 \documentclass{daily}
 \usepackage{listings}
+\usepackage{xparse}
+\usepackage{fbox}
+
 \lstset{
 	basicstyle=\small\ttfamily,
 	keywordstyle=\color{black}\bfseries\underbar,
@@ -8,12 +11,43 @@
 	showstringspaces=false
 	}
 \begin{document}
+
 本项目是中山大学数学学院每日一题的模板, 使用方法为:
 \begin{lstlisting}
-\begin{daily}{类型}{日期}{星级}{标题}
+\begin{daily}[类型][日期][星级][标题]
 	正文
 \end{daily}
 \end{lstlisting}
-其中类型
+其中类型如下:
+\begin{quote}
+	\makeatletter
+	\newcommand\TestColour[1]{{\fboxsep0pt\fbox{\colorbox{#1}{\phantom{XX}}}}}
+	\makeatother
+	\linespread{1}\selectfont
+	\ExplSyntaxOn
+	\begin{itemize}
+		\clist_map_inline:Nn \c_math_styles_clist {
+		\item[\TestColour{#1color}] \texttt{#1}
+			}
+	\end{itemize}
+	\ExplSyntaxOff
+\end{quote}
+\begin{daily}[类型][日期][星级][标题]
+	正文
+\end{daily}
+\begin{daily}[theorem][theorems][theoremv][theoremt]
+	正文
+\end{daily}
 
+
+% \arabic{year}\ifnum\month<10 0\arabic{month}
+% \else\arabic{month}
+% \fi
+% \if\arabic{day}<10	0\arabic{day}
+% \else\arabic{day}
+% \fi
+% \number\year\ifnum\month<10 0\number\month\else\number\month\fi\ifnum\day<10 0\number\day\else\number\day\fi
+% \scalebox{.3}{\makebox[1ex]{\tikz{\node[star, star point ratio=2.5, draw, fill=red]at (1,1) {};}}} wrtqbjzxbnkgb h
 \end{document}
+
+
