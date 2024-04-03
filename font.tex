@@ -1,9 +1,8 @@
-% \DeclareSymbolFont{arrows}{OT1}{NewComputerModernMath}{m}{n}
-% \SetSymbolFont{arrows}{bold}{OT1}{NewComputerModernMath}{b}{n}
+
 \setmainfont{MinionPro}[
   Extension = .otf,
   Ligatures={TeX, Common},
-  Numbers={OldStyle, Proportional},
+  Numbers={Monospaced,Proportional},
   UprightFont = *-regular,
   ItalicFont = *-It,
   BoldFont = *-bold,
@@ -55,13 +54,20 @@
 \setmathfont[range={}]{MinionMath-Regular.otf}
 % \setmathfont[range={"2B47"}]{NewCM10-Book.otf}
 \renewcommand\.{\mathchoice{\mkern2mu}{\mkern2mu}{\mkern1mu}{\mkern1mu}}
-\setCJKmainfont{方正新书宋.TTF}[
+
+\IfFontExistsTF{方正新书宋.TTF}{
+  \setCJKmainfont{方正新书宋.TTF}[
   ItalicFont = STKAITI.TTF,
   BoldFont = 方正粗雅宋_GBK,
 ]
-\setCJKsansfont{苹方黑体-细-简.ttf}[
-  BoldFont = 苹方黑体-细-简.ttf
-]
-\setsansfont{苹方黑体-细-简.ttf}[
-  BoldFont = 苹方黑体-细-简.ttf
-]
+}{}
+\IfFontExistsTF{苹方黑体-细-简.ttf}{
+  \setCJKsansfont{苹方黑体-细-简.ttf}[
+    BoldFont = 苹方黑体-细-简.ttf
+  ]
+}{}
+\IfFontExistsTF{苹方黑体-细-简.ttf}{
+  \setsansfont{苹方黑体-细-简.ttf}[
+    BoldFont = 苹方黑体-细-简.ttf
+  ]  
+}{}
