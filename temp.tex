@@ -1,0 +1,107 @@
+\documentclass[a4paper, titlepage, fontset=fandol, punct=CCT]{ctexart}
+\usepackage{fontspec}
+\usepackage[svgnames]{xcolor}
+\usepackage[skins,most]{tcolorbox}
+
+\usepackage{xfp}
+\usetikzlibrary {shapes.geometric}
+\usepackage{xpatch}
+
+
+\ExplSyntaxOn
+\clist_new:N \c_math_styles_clist
+\clist_new:N \g_sysudaily_keywords_clist
+\NewDocumentCommand{\Addmathstyles}{mO{}O{0,0,0}}{
+	\clist_put_right:Nn \c_math_styles_clist { #1 }
+	\cs_new:cpn { SYSUdaily#1name } { #2 }
+	\definecolor{#1color}{RGB}{ #3 }
+}
+
+\NewDocumentCommand{\ShowSYSUdailyname}{m}{\use:c { SYSUdaily#1name } }
+\ExplSyntaxOff
+
+\Addmathstyles{theorem}[Theorem][12,12,150]
+\Addmathstyles{proposition}[Proposition][32,115,54]
+
+\newtcolorbox{SYSUdaily}[4]{%
+  mathstyles = #1,%
+  title      = {\bfseries\expandafter\IfBlankTF{#4}{\vphantom{空}}{%
+        \ShowSYSUdailyname{#1}：#4%
+      }\hfill{\ifx#2\empty\else\expandafter\SYSUdailyParameterDate\fi}},%
+  fonttitle = {},
+}%
+
+
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\SYSUdailycheck}{mm}{
+  \clist_if_in:NnTF \c_math_styles_clist {#1}
+  { 
+	\PackageWarning{SYSUdaily}{style: #1}	
+	\cs_set:cpn { SYSUdailyParameterMathStyles } { #1 }
+	\cs_set:cpn { #2check } { MathStyles } }
+  {
+    \regex_match:nnTF { ^[+-]?\d+$ } {#1}
+    {
+      \cs_set:cpn { #2check } { Title }
+      \int_compare:nTF {
+        #1 > 10000000
+      }
+      { 
+				\PackageWarning{SYSUdaily}{date: #1}		
+				\cs_set:cpn { SYSUdailyParameterDate } { #1 }
+				\cs_set:cpn { #2check } { Date } }
+      {
+        \int_compare:nTF {
+          #1 < 5
+        }
+        { 
+					\PackageWarning{SYSUdaily}{difficulty: #1}
+					\cs_set:cpn { SYSUdailyParameterDifficulty } { #1 }
+					\cs_set:cpn { #2check } { Difficulty } }
+        { }
+      }
+    }
+    { 
+			\PackageWarning{SYSUdaily}{title: #1}	
+		\cs_set:cpn { #2check } { Title } }
+		\cs_set:cpn { SYSUdailyParameterTitle } { #1 }
+  }
+}
+
+\ExplSyntaxOff
+
+
+
+\ExplSyntaxOn
+
+
+\NewDocumentEnvironment{daily}{ O{} +b } {
+	\PackageWarning{SYSUdaily}{arg: #1}
+    \clist_set:Nn \l_tmpa_clist {#1}
+    \clist_map_inline:Nn \l_tmpa_clist {
+        \SYSUdailycheck {##1}{I}
+    }
+    \begin{SYSUdaily}{\SYSUdailyParameterMathStyles}{\SYSUdailyParameterDate}{\SYSUdailyParameterDifficulty}{\SYSUdailyParameterTitle}
+        #2
+    \end{SYSUdaily}
+}{}
+\ExplSyntaxOff
+
+\def\SYSUdailyParameterMathStyles{proposition}
+\def\SYSUdailyParameterDate{\the\year\ifnum\month<10{0}\the\month\else\the\month\fi\ifnum\day<10{0}\the\day\else\the\day\fi}
+\def\SYSUdailyParameterDifficulty{0}
+\let\SYSUdailyParameterTitle\empty
+\begin{document}
+
+\begin{daily}[theorem, 20230506, 2, abc]
+    abc
+\end{daily}
+
+\begin{daily}[proposition, 11111111, 1, 标题]
+	abc
+\end{daily}
+
+
+\end{document}
