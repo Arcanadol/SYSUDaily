@@ -89,7 +89,7 @@
 
 ![1712425740427](https://github.com/Arcanadol/SYSUdaily/assets/104732548/01e452bf-8209-46c9-8a49-cd3f462506f5)
 
-标题未设置时, 默认为 `\relax``.
+标题未设置时, 默认为 `\relax`.
 
 ### 字体
 
