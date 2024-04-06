@@ -1,4 +1,4 @@
-\LoadClass[a4paper, fontset=fandol, punct=CCT]{ctexart}
+\LoadClass[a4paper, fontset=fandol, punct=kaiming]{ctexart}
 \RequirePackage[svgnames]{xcolor}
 \RequirePackage[skins,most,breakable]{tcolorbox}
 \ProvidesClass{SYSUDaily}
@@ -9,7 +9,6 @@
 \RequirePackage{xeCJKfntef}
 \RequirePackage{eucal}
 \RequirePackage{enumitem}
-% \defaultfontfeatures{Mapping=tex-text}
 \RequirePackage{fixdif}
 \RequirePackage{mathtools}
 \RequirePackage{kvoptions}
@@ -22,51 +21,50 @@
 \ProcessKeyvalOptions*
 
 \if@SYSUdaily@unimath
-  \RequirePackage{unicode-math}
-  \@input{unim.clo}
-  \IfFontExistsTF{方正新书宋_GBK}{
-  \setCJKmainfont{方正新书宋_GBK}[
-    ItalicFont = 华文楷体,
-    BoldFont = 方正粗雅宋_GBK,
-  ]
-  }{}
-  \IfFontExistsTF{苹方黑体-细-简.ttf}{
-    \setCJKsansfont{苹方黑体-细-简.ttf}[
-      BoldFont = 苹方黑体-细-简.ttf
-    ]
-  }{}
-  \IfFontExistsTF{苹方黑体-细-简.ttf}{
-    \setsansfont{苹方黑体-细-简.ttf}[
-      BoldFont = 苹方黑体-细-简.ttf
-    ]  
-  }{}
-  \IfFontExistsTF{Resource Han Rounded SC}
-  {\setCJKmonofont[Scale = .9, FakeStretch=1.05]{Resource Han Rounded SC}}{}
+	\RequirePackage{unicode-math}
+	\@input{unim.clo}
+	\IfFontExistsTF{方正新书宋_GBK}{
+		\setCJKmainfont{方正新书宋_GBK}[
+			ItalicFont = 华文楷体,
+			BoldFont = 方正粗雅宋_GBK,
+		]
+	}{}
+	\IfFontExistsTF{苹方黑体-细-简.ttf}{
+		\setCJKsansfont{苹方黑体-细-简.ttf}[
+			BoldFont = 苹方黑体-细-简.ttf
+		]
+	}{}
+	\IfFontExistsTF{苹方黑体-细-简.ttf}{
+		\setsansfont{苹方黑体-细-简.ttf}[
+			BoldFont = 苹方黑体-细-简.ttf
+		]
+	}{}
+	\IfFontExistsTF{Resource Han Rounded SC}
+	{\setCJKmonofont[Scale = .9, FakeStretch=1.05]{Resource Han Rounded SC}}{}
 \else
-  \RequirePackage{amsfonts,amssymb}
-  \RequirePackage{mathrsfs}
-  \RequirePackage{dsfont}
-  \RequirePackage{bm}
-  \let\mathbb\mathds
-  \IfFontExistsTF{Resource Han Rounded SC}{
-  \setCJKmonofont[Scale = .9, FakeStretch=1.1]{Resource Han Rounded SC}
-  }{}
-  \AtBeginDocument{%
-    \DeclareFontFamily{U}{msa}{}
-    \DeclareFontShape{U}{msa}{m}{n}{%
-      <-9>cmbras8%
-      <9-10>cmbras9%
-      <10->cmbras10%
-    }{}
-    \DeclareFontFamily{U}{msb}{}
-    \DeclareFontShape{U}{msb}{m}{n}{%
-      <-9>cmbrbs8%
-      <9-10>cmbrbs9%
-      <10->cmbrbs10%
-    }{}
-  }
+	\RequirePackage{amsfonts,amssymb}
+	\RequirePackage{mathrsfs}
+	\RequirePackage{dsfont}
+	\RequirePackage{bm}
+	\let\mathbb\mathds
+	\IfFontExistsTF{Resource Han Rounded SC}{
+		\setCJKmonofont[Scale = .9, FakeStretch=1.1]{Resource Han Rounded SC}
+	}{}
+	\AtBeginDocument{%
+		\DeclareFontFamily{U}{msa}{}
+		\DeclareFontShape{U}{msa}{m}{n}{%
+			<-9>cmbras8%
+			<9-10>cmbras9%
+			<10->cmbras10%
+		}{}
+		\DeclareFontFamily{U}{msb}{}
+		\DeclareFontShape{U}{msb}{m}{n}{%
+			<-9>cmbrbs8%
+			<9-10>cmbrbs9%
+			<10->cmbrbs10%
+		}{}
+	}
 \fi
-
 
 \usetikzlibrary {shapes.geometric}
 \RequirePackage{xpatch}
@@ -98,7 +96,7 @@
 			height from = 45pt to 1000pt,
 			enhanced,
 			arc=0mm,
-      breakable,
+			breakable,
 			outer arc=0mm,
 			before skip balanced=2mm,
 			after skip balanced=3mm,
@@ -172,44 +170,37 @@
 \setlength{\SYSUDaily@width}{0.8\textwidth}
 \newsavebox{\SYSUDaily@measurebox}
 
-
-
 \ExplSyntaxOn
 
 \newtcolorbox{SYSUDaily@}[4]{%
-	mathstyles = #1,%
-	title      = {\bfseries\ShowSYSUDaily@name{#1}
-  \exp_args:Nf\IfBlankTF{#4}{}{\the\value{SYSUDaily@counter}\stepcounter{SYSUDaily@counter}：#4%
-			}\hfill{\ifx#2\empty\else\expandafter\SYSUDaily@Parameter@Date\fi}},%
-	watermark~text = {\SYSUDaily@watermark},%
-	underlay    = {\putstars{#3}{#1}},%
-	fonttitle = {},
+mathstyles = #1,%
+title      = {\bfseries\ShowSYSUDaily@name{#1}
+		\exp_args:Nf\IfBlankTF{#4}{}{\the\value{SYSUDaily@counter}\stepcounter{SYSUDaily@counter}：#4%
+		}\hfill{\ifx#2\empty\else\expandafter\SYSUDaily@Parameter@Date\fi}},%
+watermark~text = {\SYSUDaily@watermark},%
+underlay    = {\putstars{#3}{#1}},%
+fonttitle = {},
 }
 \newtcolorbox{SYSUDaily@empty}{%
-  mathstyles=empty,
-  top=1.5ex,
-  bottom=1.5ex,
-  watermark~text = {\SYSUDaily@watermark},
-  fonttitle = {},
+mathstyles=empty,
+top=1.5ex,
+bottom=1.5ex,
+watermark~text = {\SYSUDaily@watermark},
+fonttitle = {},
 }%
 
 \newcommand \SYSUDaily@Parameter@MathStyles { proposition }
 
 \newcommand \SYSUDaily@Parameter@Title {}
-% \str@setNn \SYSUDaily@Parameter@Title { proposition }
 
 \newcommand \SYSUDaily@Parameter@Date { \today }
 
 \newcommand \SYSUDaily@Parameter@Difficulty { 0 }
 
-% \newcommand \SYSUDaily@ParameterMathStyles {proposition}
-% \newcommand \SYSUDaily@Parameter@Date {\today}
-% \newcommand \SYSUDaily@Parameter@Difficulty {0}
-% \let\SYSUDaily@Parameter@Title\empty
 \NewDocumentCommand{\SYSUDaily@check}{m}{
 	\seq_if_in:NnTF \c_math_styles_seq {#1}
 	{
-    \PackageWarning{SYSUDaily}{MathStyles~check:~#1}
+		\PackageWarning{SYSUDaily}{MathStyles~check:~#1}
 		\cs_set:cpn { SYSUDaily@Parameter@MathStyles } { #1 }
 	}
 	{
@@ -219,10 +210,7 @@
 			\int_compare:nTF {
 				#1 > 100
 			}
-			{
-				\SYSUDaily_set_date_format:n {#1}
-				% \cs_set:cpn { SYSUDaily@ParameterDate } { #1 } 
-			}
+			{ \SYSUDaily_set_date_format:n {#1}	}
 			{
 				\int_compare:nTF {
 					#1 < 5
@@ -269,12 +257,9 @@
 }
 
 \NewDocumentEnvironment{daily}{ O{} +b } {
-	\seq_set_from_clist:Nn \l_tmpa_seq {#1}
+	\seq_set_from_clist:Nn \l_tmpa_seq { #1 }
 	\seq_reverse:N \l_tmpa_seq
-	\seq_map_inline:Nn \l_tmpa_seq {
-		% \PackageWarning{SYSUDaily}{check: ##1}
-		\SYSUDaily@check {##1}
-	}
+	\seq_map_inline:Nn \l_tmpa_seq { \SYSUDaily@check { ##1 } }
 	\hbox_set:Nn \l_tmpa_box {
 		\begin{minipage}{\SYSUDaily@width}
 			\itshape #2
@@ -290,18 +275,16 @@
 
 	\str_if_eq:nnTF {#1} {empty} {
 		\begin{SYSUDaily@empty}
-      #2
+			#2
 		\end{SYSUDaily@empty}
-	} 
-  {
-    % \exp_args:Ncc
-		\begin{SYSUDaily@}
-      {\SYSUDaily@Parameter@MathStyles}
+	}
+	{
+		\begin{SYSUDaily@}{\SYSUDaily@Parameter@MathStyles}
 			{\SYSUDaily@Parameter@Date}
 			{\SYSUDaily@Parameter@Difficulty}
 			{\SYSUDaily@Parameter@Title}
 			#2
-    \end{SYSUDaily@}
+		\end{SYSUDaily@}
 	}
 }
 {}
