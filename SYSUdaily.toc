@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}介绍}{1}{section.1}%
+\contentsline {section}{\numberline {2}使用方法}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}\texttt {daily}环境}{1}{subsection.2.1}%
+\contentsline {paragraph}{类型}{2}{paragraph*.2}%
+\contentsline {paragraph}{日期}{2}{paragraph*.3}%
+\contentsline {paragraph}{难度}{3}{paragraph*.4}%
+\contentsline {paragraph}{标题}{3}{paragraph*.5}%
+\contentsline {subsection}{\numberline {2.2}字体}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}数学字体}{4}{subsection.2.3}%
+\contentsline {section}{\numberline {3}宏包依赖}{4}{section.3}%
+\contentsline {section}{\numberline {4}更新历史}{5}{section.4}%

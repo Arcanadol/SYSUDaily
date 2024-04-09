@@ -1,3 +1,10 @@
+% This file may be distributed and/or modified under the conditions of the LaTeX Project Public 
+% License, either version 1.3c of this license or (at your option) any later version. The 
+% latest version of this license is in 
+%                         https://www.latex-project.org/lppl.txt 
+% and version 1.3c or later is part of all distributions of LaTeX version 2008 or later.
+
+
 \LoadClass[a4paper, fontset=fandol, punct=kaiming]{ctexart}
 \RequirePackage[svgnames]{xcolor}
 \RequirePackage[skins,most,breakable]{tcolorbox}
@@ -193,7 +200,10 @@ fonttitle = {},
 
 \newcommand \SYSUDaily@Parameter@Title {}
 
-\newcommand \SYSUDaily@Parameter@Date { \today }
+\newcommand \SYSUDaily@Parameter@Date {}
+\cs_new:Npn \SYSUDaily_set_current_date_format: {
+	%  默认日期格式, 错了
+}
 
 \newcommand \SYSUDaily@Parameter@Difficulty { 0 }
 
@@ -226,35 +236,88 @@ fonttitle = {},
 		}
 	}
 }
-\cs_new:Npn \SYSUDaily_set_date_format:n #1 {
-	\int_compare:nTF { #1 > 999999 } {
-		\SYSUDaily_set_date_format_eight:n  #1
-	} {
-		\int_compare:nTF { #1 > 9999 } {
-			\SYSUDaily_set_date_format_six:n  #1
-		} {
-			\SYSUDaily_set_date_format_four:n  #1
-		}
-	}
+\bool_new:N \l_SYSUDaily_show_date_bool
+\bool_set_true:N \l_SYSUDaily_show_date_bool
+
+\newcommand\SYSUDailyNoShowDate{\bool_set_false:N \l_SYSUDaily_show_date_bool}
+\newcommand\SYSUDailyDoShowDate{\bool_set_true:N \l_SYSUDaily_show_date_bool}
+
+\cs_new:Npn \SYSUDaily_show_date:n #1 {
+    \bool_set_true:N #1
 }
+\cs_new:Npn \SYSUDaily_hide_date:n #1 {
+    \bool_set_false:N #1
+}
+
+\cs_new:Npn \SYSUDaily_set_date_format:n #1 {
+    \bool_if:NT \l_SYSUDaily_show_date_bool {
+        \int_case:nnF { \tl_count:n {#1} }
+        {
+            {4}{\SYSUDaily_set_date_format_four:n {#1}}
+            {6}{\SYSUDaily_set_date_format_six:n {#1}}
+            {8}{\SYSUDaily_set_date_format_eight:n {#1}}
+        }{
+            \PackageWarning{SYSUDaily}{Bad Date}
+        }
+    }
+}
+
+\cs_new:Npn \SYSUDaily_set_date_format_eight:n #1 {
+    \SYSUDaily_set_date_format_aux:nnnnnnn #1
+}
+
+\cs_new:Npn \SYSUDaily_set_date_format_six:n #1 {
+    \SYSUDaily_set_date_format_aux:nnnnnn #1
+}
+
+\cs_new:Npn \SYSUDaily_set_date_format_four:n #1 {
+    \SYSUDaily_set_date_format_aux:nnnn #1
+}
+
+\cs_new:Npn \SYSUDaily_set_date_format_aux:nnnnnnn #1#2#3#4#5#6#7#8 {
+    \cs_set:cpn { SYSUDaily@Parameter@Date } {
+        #1#2#3#4 年\SYSUDaily_set_leading_zero:n {#5}{#6} 月\SYSUDaily_set_leading_zero:n {#7}{#8} 日
+    }
+}
+\cs_new:Npn \SYSUDaily_set_date_format_aux:nnnnnn #1#2#3#4#5#6 {
+    \cs_set:cpn { SYSUDaily@Parameter@Date } {
+        #1#2 年\SYSUDaily_set_leading_zero:n {#3}{#4} 月\SYSUDaily_set_leading_zero:n {#5}{#6} 日
+    }
+}
+\cs_new:Npn \SYSUDaily_set_date_format_aux:nnnn #1#2#3#4 {
+    \cs_set:cpn { SYSUDaily@Parameter@Date } {
+        \SYSUDaily_set_leading_zero:n {#1}{#2} 月\SYSUDaily_set_leading_zero:n {#3}{#4} 日
+    }
+}
+% \cs_new:Npn \SYSUDaily_set_date_format:n #1 {
+% 	\int_compare:nTF { #1 > 999999 } {
+% 		\SYSUDaily_set_date_format_eight:n  #1
+% 	} {
+% 		\int_compare:nTF { #1 > 9999 } {
+% 			\SYSUDaily_set_date_format_six:n  #1
+% 		} {
+% 			\SYSUDaily_set_date_format_four:n  #1
+% 		}
+% 	}
+% }
 \cs_new:Npn \SYSUDaily_set_leading_zero:n #1#2 {
 	\int_compare:nTF { #1 = 0 } { #2 } { #1#2 }
 }
-\cs_new:Npn \SYSUDaily_set_date_format_eight:n #1#2#3#4#5#6#7#8 {
-	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-		#1 #2 #3 #4 年\SYSUDaily_set_leading_zero:n {#5}{#6} 月\SYSUDaily_set_leading_zero:n {#7}{#8} 日
-	}
-}
-\cs_new:Npn \SYSUDaily_set_date_format_six:nnnnnn #1#2#3#4#5#6 {
-	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-		#1 #2 年\SYSUDaily_set_leading_zero:n {#3}{#4} 月\SYSUDaily_set_leading_zero:n {#5}{#6} 日
-	}
-}
-\cs_new:Npn \SYSUDaily_set_date_format_four:nnnn #1#2#3#4 {
-	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-		\SYSUDaily_set_leading_zero:n {#1}{#2} 月\SYSUDaily_set_leading_zero:n {#3}{#4} 日
-	}
-}
+% \cs_new:Npn \SYSUDaily_set_date_format_eight:n #1#2#3#4#5#6#7#8 {
+% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+% 		#1 #2 #3 #4 年\SYSUDaily_set_leading_zero:n {#5}{#6} 月\SYSUDaily_set_leading_zero:n {#7}{#8} 日
+% 	}
+% }
+% \cs_new:Npn \SYSUDaily_set_date_format_six:nnnnnn #1#2#3#4#5#6 {
+% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+% 		#1 #2 年\SYSUDaily_set_leading_zero:n {#3}{#4} 月\SYSUDaily_set_leading_zero:n {#5}{#6} 日
+% 	}
+% }
+% \cs_new:Npn \SYSUDaily_set_date_format_four:nnnn #1#2#3#4 {
+% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+% 		\SYSUDaily_set_leading_zero:n {#1}{#2} 月\SYSUDaily_set_leading_zero:n {#3}{#4} 日
+% 	}
+% }
 
 \NewDocumentEnvironment{daily}{ O{} +b } {
 	\seq_set_from_clist:Nn \l_tmpa_seq { #1 }

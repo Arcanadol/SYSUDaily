@@ -77,7 +77,77 @@
 类型未设置时, 默认为 \verb|proposition|.
 \paragraph{日期}
 日期为8, 6, 4位整数: \verb|20101225|, \verb|101225|, \verb|1225| 分别代表三种不同的日期输入风格.
-日期未设置时, 默认为当天日期 \verb|\today|:
+
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[19111225]
+    那是一个遥远的圣诞夜.
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[19111225]
+		那是一个遥远的圣诞夜.
+	\end{daily}
+\end{multicols}
+
+
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[111225]
+    我忘不了那年的圣诞节.
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[111225]
+		我忘不了那年的圣诞节.
+	\end{daily}
+\end{multicols}
+
+
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[1225]
+    今年的圣诞节, 还要多久?
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[1225]
+		今年的圣诞节, 还要多久?
+	\end{daily}
+\end{multicols}
+
+一个会被识别为日期的数字, 但是格式错误时, 将不会显示任何东西:
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[125]
+		今天是 1 月 25 日? 异或 12 月 5 日?
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[125]
+		今天是 1 月 25 日? 异或 12 月 5 日?
+	\end{daily}
+\end{multicols}
+请不要把它当做关闭日期显示的开关, 我们提供 \verb|\SYSUDailyNoShowDate| 来关闭日期显示, 也可以用 \verb|\SYSUDailyDoShowDate| 来恢复开启.
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+	\SYSUDailyNoShowDate
+	\begin{daily}
+		今天几月几号, 我也不知道.
+	\end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}
+		今天几月几号, 我也不知道.
+	\end{daily}
+\end{multicols}
+\SYSUDailyDoShowDate
+日期未设置时, 默认为当天日期 \verb|\today|: 目前坏了, 在修
 
 \begin{multicols}{2}
 	% \footnotesize
@@ -91,6 +161,9 @@
 		\today{}.
 	\end{daily}
 \end{multicols}
+
+
+
 \paragraph{难度}
 难度为1--4的整数, 否则不会识别为难度.
 \begin{lstlisting}
