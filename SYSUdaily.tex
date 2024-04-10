@@ -18,7 +18,7 @@
   section/format += \raggedright,
 }
 \title{中山大学数学学院「每日一题」模板}
-\author{Innocent, Panadol, \emph{v2.0}}
+\author{Innocent, Panadol, \emph{v2.1}}
 
 \makeatletter
 \renewenvironment{abstract}[1][\abstractname]{
@@ -142,23 +142,23 @@
 	\end{daily}
   \end{lstlisting}
 	\small
+	\SYSUDailyNoShowDate
 	\begin{daily}
 		今天几月几号, 我也不知道.
 	\end{daily}
 \end{multicols}
 \SYSUDailyDoShowDate
-日期未设置时, 默认为当天日期 \verb|\today|: 目前坏了, 在修
-
+日期未设置时, 默认为当天日期 \verb|\today|: 
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
   \begin{daily}
-    \today{}.
+    今天是\today{}, 不是么?
   \end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}
-		\today{}.
+		今天是\today{}, 不是么?
 	\end{daily}
 \end{multicols}
 
@@ -266,6 +266,12 @@
 				使用 \textsf{l3seq} 处理 \verb|daily| 环境的可选参数, 利用更合理的判断机制实现输入上的简化;
 		\item
 				去除随机图标.
+	\end{itemize}
+
+	\textbf{v2.1}~(2024/03/04--2024/04/10)
+	\begin{itemize}[parsep=0pt,itemsep=0pt]
+		\item
+				更精确的日期检测(大于100的4, 6, 8 位整数), 添加了开启和关闭日期显示的功能.
 	\end{itemize}
 \end{flushleft}
 

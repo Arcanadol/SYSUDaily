@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.24)  10 APR 2024 03:10
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.24)  10 APR 2024 11:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1138,9 +1138,6 @@ LaTeX Warning: Invalid end-point for range '+-\]' in character class.
 
 Package SYSUDaily Warning: Number check: 125 on input line 133.
 
-
-Package SYSUDaily Warning: BadDate on input line 133.
-
 LaTeX Font Info:    Font shape `TU/FandolSong-Regular(0)/m/sl' in size <10.53937> not available
 (Font)              Font shape `TU/FandolSong-Regular(0)/m/it' tried instead on input line 134.
 [2]
@@ -1204,10 +1201,10 @@ Package rerunfilecheck Info: File `SYSUdaily.out' has not changed.
 (rerunfilecheck)             Checksum: D5B556CB9A00D5FB0FA7EA5AE8276D29;544.
  ) 
 Here is how much of TeX's memory you used:
- 38091 strings out of 476683
- 867983 string characters out of 5801401
+ 38089 strings out of 476683
+ 867904 string characters out of 5801401
  1887012 words of memory out of 5000000
- 57645 multiletter control sequences out of 15000+600000
+ 57643 multiletter control sequences out of 15000+600000
  534317 words of font info for 171 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  114i,12n,118p,3283b,1819s stack positions out of 10000i,1000n,20000p,200000b,200000s

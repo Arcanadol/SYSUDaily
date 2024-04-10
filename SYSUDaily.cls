@@ -201,9 +201,6 @@ fonttitle = {},
 \newcommand \SYSUDaily@Parameter@Title {}
 
 \newcommand \SYSUDaily@Parameter@Date {}
-\cs_new:Npn \SYSUDaily_set_current_date_format: {
-	%  默认日期格式, 错了
-}
 
 \newcommand \SYSUDaily@Parameter@Difficulty { 0 }
 
@@ -243,83 +240,52 @@ fonttitle = {},
 \newcommand\SYSUDailyDoShowDate{\bool_set_true:N \l_SYSUDaily_show_date_bool}
 
 \cs_new:Npn \SYSUDaily_show_date:n #1 {
-    \bool_set_true:N #1
+	\bool_set_true:N #1
 }
 \cs_new:Npn \SYSUDaily_hide_date:n #1 {
-    \bool_set_false:N #1
+	\bool_set_false:N #1
 }
 
 \cs_new:Npn \SYSUDaily_set_date_format:n #1 {
-    \bool_if:NT \l_SYSUDaily_show_date_bool {
-        \int_case:nnF { \tl_count:n {#1} }
-        {
-            {4}{\SYSUDaily_set_date_format_four:n {#1}}
-            {6}{\SYSUDaily_set_date_format_six:n {#1}}
-            {8}{\SYSUDaily_set_date_format_eight:n {#1}}
-        }{
-            \PackageWarning{SYSUDaily}{Bad Date}
-        }
-    }
+	\bool_if:NT \l_SYSUDaily_show_date_bool {
+		\int_case:nnF { \tl_count:n {#1} }
+		{
+			{4}{\SYSUDaily_set_date_format_aux:nnnn #1}
+			{6}{\SYSUDaily_set_date_format_aux:nnnnnn #1}
+			{8}{\SYSUDaily_set_date_format_aux:nnnnnnnn #1}
+		}{
+			\def \SYSUDaily@Parameter@Date {}
+		}
+	}
 }
-
-\cs_new:Npn \SYSUDaily_set_date_format_eight:n #1 {
-    \SYSUDaily_set_date_format_aux:nnnnnnn #1
+\cs_new:Npn \SYSUDaily_set_date_month:n #1#2 {
+	\int_compare:nTF { #1 = 0 } { #2 } { #1#2 }
 }
-
-\cs_new:Npn \SYSUDaily_set_date_format_six:n #1 {
-    \SYSUDaily_set_date_format_aux:nnnnnn #1
+\cs_new:Npn \SYSUDaily_set_date_day:n #1#2 {
+	\int_compare:nTF { #1 = 0 } { #2 } { #1#2 }
 }
-
-\cs_new:Npn \SYSUDaily_set_date_format_four:n #1 {
-    \SYSUDaily_set_date_format_aux:nnnn #1
-}
-
-\cs_new:Npn \SYSUDaily_set_date_format_aux:nnnnnnn #1#2#3#4#5#6#7#8 {
-    \cs_set:cpn { SYSUDaily@Parameter@Date } {
-        #1#2#3#4 年\SYSUDaily_set_leading_zero:n {#5}{#6} 月\SYSUDaily_set_leading_zero:n {#7}{#8} 日
-    }
+\cs_new:Npn \SYSUDaily_set_date_format_aux:nnnnnnnn #1#2#3#4#5#6#7#8 {
+	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+		#1#2#3#4 年 \SYSUDaily_set_date_month:n {#5}{#6} 月\SYSUDaily_set_date_day:n {#7}{#8} 日
+	}
 }
 \cs_new:Npn \SYSUDaily_set_date_format_aux:nnnnnn #1#2#3#4#5#6 {
-    \cs_set:cpn { SYSUDaily@Parameter@Date } {
-        #1#2 年\SYSUDaily_set_leading_zero:n {#3}{#4} 月\SYSUDaily_set_leading_zero:n {#5}{#6} 日
-    }
+	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+		#1#2 年\SYSUDaily_set_date_month:n {#3}{#4} 月\SYSUDaily_set_date_day:n {#5}{#6} 日
+	}
 }
 \cs_new:Npn \SYSUDaily_set_date_format_aux:nnnn #1#2#3#4 {
-    \cs_set:cpn { SYSUDaily@Parameter@Date } {
-        \SYSUDaily_set_leading_zero:n {#1}{#2} 月\SYSUDaily_set_leading_zero:n {#3}{#4} 日
-    }
+	\cs_set:cpn { SYSUDaily@Parameter@Date } {
+		\SYSUDaily_set_date_month:n {#1}{#2} 月\SYSUDaily_set_date_day:n {#3}{#4} 日
+	}
 }
-% \cs_new:Npn \SYSUDaily_set_date_format:n #1 {
-% 	\int_compare:nTF { #1 > 999999 } {
-% 		\SYSUDaily_set_date_format_eight:n  #1
-% 	} {
-% 		\int_compare:nTF { #1 > 9999 } {
-% 			\SYSUDaily_set_date_format_six:n  #1
-% 		} {
-% 			\SYSUDaily_set_date_format_four:n  #1
-% 		}
-% 	}
-% }
 \cs_new:Npn \SYSUDaily_set_leading_zero:n #1#2 {
 	\int_compare:nTF { #1 = 0 } { #2 } { #1#2 }
 }
-% \cs_new:Npn \SYSUDaily_set_date_format_eight:n #1#2#3#4#5#6#7#8 {
-% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-% 		#1 #2 #3 #4 年\SYSUDaily_set_leading_zero:n {#5}{#6} 月\SYSUDaily_set_leading_zero:n {#7}{#8} 日
-% 	}
-% }
-% \cs_new:Npn \SYSUDaily_set_date_format_six:nnnnnn #1#2#3#4#5#6 {
-% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-% 		#1 #2 年\SYSUDaily_set_leading_zero:n {#3}{#4} 月\SYSUDaily_set_leading_zero:n {#5}{#6} 日
-% 	}
-% }
-% \cs_new:Npn \SYSUDaily_set_date_format_four:nnnn #1#2#3#4 {
-% 	\cs_set:cpn { SYSUDaily@Parameter@Date } {
-% 		\SYSUDaily_set_leading_zero:n {#1}{#2} 月\SYSUDaily_set_leading_zero:n {#3}{#4} 日
-% 	}
-% }
 
 \NewDocumentEnvironment{daily}{ O{} +b } {
+	\bool_if:NT \l_SYSUDaily_show_date_bool{
+	\def \SYSUDaily@Parameter@Date {\today}}
 	\seq_set_from_clist:Nn \l_tmpa_seq { #1 }
 	\seq_reverse:N \l_tmpa_seq
 	\seq_map_inline:Nn \l_tmpa_seq { \SYSUDaily@check { ##1 } }
