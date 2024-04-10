@@ -6,6 +6,8 @@
 \usepackage{cleveref}
 \RequirePackage[a4paper, centering]{geometry}
 
+
+
 \lstset{
 	basicstyle=\small\ttfamily,
 	keywordstyle=\color{black}\bfseries\underbar,
@@ -18,7 +20,7 @@
   section/format += \raggedright,
 }
 \title{中山大学数学学院「每日一题」模板}
-\author{Innocent, Panadol, \emph{v2.0}}
+\author{Innocent, Panadol, \emph{v2.1}}
 
 \makeatletter
 \renewenvironment{abstract}[1][\abstractname]{
@@ -31,33 +33,35 @@
 \makeatother
 \begin{document}
 \maketitle
+
 \begin{abstract}[简介]
-	此文档类 \verb|SYSUdaily.cls| 旨在建立一个简单易用的中山大学数学学院「每日一题」计划的排版渠道.
+	此文档类 \verb|SYSUdaily.cls| 旨在建立一个简单易用的中山大学数学学院「每日一题」计划的排版渠道。
 \end{abstract}
 
 \begin{abstract}[免责声明]
-	此文档类仅仅为了处理中山大学数学学院「每日一题」计划而编写, 勿作他图, 任何将此模板用于非中山大学数学学院「每日一题」计划排版而导致的纠纷与本模板作者无关.
+	此文档类仅仅为了处理中山大学数学学院「每日一题」计划而编写，勿作他图，任何将此模板用于非中山大学数学学院「每日一题」计划排版而导致的纠纷与本模板作者无关。
 \end{abstract}
 
 \begin{multicols}{2}
 	\tableofcontents
 \end{multicols}
 
+
 \section{介绍}
-最早的一版用于中山大学数学学院「每日一题」计划排版的 \LaTeX{} 模板由 Innocent 编写, 在 2023 年 10 月投入最初的使用. 2024年3月, Panadol重构了整个模板的代码, 现在代码托管在GitHub\footnote{\url{https://github.com/Arcanadol/SYSUdaily}}上, 由Innocent和Panadol共同维护.
+最早的一版用于中山大学数学学院「每日一题」计划排版的 \LaTeX{} 模板由 Innocent 编写，在 2023 年 10 月投入最初的使用。2024年3月，Panadol重构了整个模板的代码，现在代码托管在GitHub\footnote{\url{https://github.com/Arcanadol/SYSUdaily}}上，由Innocent和Panadol共同维护。
 
 \section{使用方法}
 \subsection{\texttt{daily}环境}
-本项目是中山大学数学学院每日一题的模板, 使用方法为:
+\texttt{daily}环境是本模板主要实现的功能，使用方法为：
 \begin{lstlisting}
   \begin{daily}[参数]
     正文
   \end{daily}
 \end{lstlisting}
-方括号 \verb|[]| 中的参数的顺序不影响结果. 参数列表如下:
+方括号 \verb|[]| 中的参数的顺序不影响结果。参数列表如下：
 
 \paragraph{类型}
-仅需输入类型命名即可确定 \verb|SYSUdaily| 的类型. 所有类型定义及颜色如下:
+仅需输入类型命名即可确定 \verb|SYSUdaily| 的类型。所有类型定义及颜色如下：
 \begin{quote}
 	\makeatletter
 	\newcommand\TestColour[1]{{\fboxsep0pt\fbox{\colorbox{#1}{\phantom{XX}}}}}
@@ -74,35 +78,108 @@
 	\end{multicols}
 	\ExplSyntaxOff
 \end{quote}
-类型未设置时, 默认为 \verb|proposition|.
+类型未设置时，默认为 \verb|proposition|。
 \paragraph{日期}
-日期为8, 6, 4位整数: \verb|20101225|, \verb|101225|, \verb|1225| 分别代表三种不同的日期输入风格.
-日期未设置时, 默认为当天日期 \verb|\today|:
+日期为8、6、4位整数：\verb|20101225|、\verb|101225|、\verb|1225| 分别代表三种不同的日期输入风格。
 
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
+  \begin{daily}[19111225]
+    那是一个遥远的圣诞夜。
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[19111225]
+		那是一个遥远的圣诞夜。
+	\end{daily}
+\end{multicols}
+
+
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[111225]
+    我忘不了那年的圣诞节。
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[111225]
+		我忘不了那年的圣诞节。
+	\end{daily}
+\end{multicols}
+
+
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[1225]
+    今年的圣诞节，还要多久？
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[1225]
+		今年的圣诞节，还要多久？
+	\end{daily}
+\end{multicols}
+
+一个会被识别为日期的数字，但是格式错误时，将不会显示任何东西：
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+  \begin{daily}[125]
+		今天是 1 月 25 日？异或 12 月 5 日？
+  \end{daily}
+  \end{lstlisting}
+	\small
+	\begin{daily}[125]
+		今天是 1 月 25 日？异或 12 月 5 日？
+	\end{daily}
+\end{multicols}
+请不要把它当做关闭日期显示的开关，我们提供 \verb|\SYSUDailyNoShowDate| 来关闭日期显示，也可以用 \verb|\SYSUDailyDoShowDate| 来恢复开启。
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
+	\SYSUDailyNoShowDate
+	\begin{daily}
+		今天几月几号，我也不知道。
+	\end{daily}
+  \end{lstlisting}
+	\small
+	\SYSUDailyNoShowDate
+	\begin{daily}
+		今天几月几号，我也不知道。
+	\end{daily}
+\end{multicols}
+\SYSUDailyDoShowDate
+日期未设置时，默认为当天日期 \verb|\today|：
+\begin{multicols}{2}
+	% \footnotesize
+	\begin{lstlisting}
   \begin{daily}
-    \today{}.
+    今天是\today{}，不是么?
   \end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}
-		\today{}.
+		今天是\today{}，不是么?
 	\end{daily}
 \end{multicols}
+
+
+
 \paragraph{难度}
-难度为1--4的整数, 否则不会识别为难度.
+难度为1--4的整数，否则不会识别为难度。
 \begin{lstlisting}
   \begin{daily}[解析函数的刻画, theorem, 20101010, 4]
-    ......
+    ……
   \end{daily}
 \end{lstlisting}
 \begin{daily}[解析函数的刻画, theorem, 20101010, 4]
 	令$\mathbb I$是$\mathbb R$中的某开区间，令$f\in \mathscr{C}^\infty(\mathbb  I)$，称其在$x_0$处解析，若在$x_0$某邻域内下式成立：
-	$$
+	\[
 	f(x) = \sum_{n\geqslant0} a_n(x-x_0)^n.
-	$$
+	\]
 	记为$f\in \mathscr{C}^\omega(x_0)$。任给$E\subset \mathbb I$，定义$\mathscr{C}^\omega(E)=\bigcap_{x\in E}\mathscr{C}^\omega(x)$。
 
 	现在证明：
@@ -111,10 +188,10 @@
 			\sup\biggl\{~\biggl| \frac{f^{(n)}(x)}{n!} \biggr|^{1/n}\!;~n\geqslant 1, x\in [\alpha,\beta] ~\biggr\}   <\infty.
 	\]
 \end{daily}
-难度未设置时, 默认为 \verb|0|.
+难度未设置时，默认为 \verb|0|。
 \paragraph{标题}
-除去满足上面条件的参数, 其余参数均视为标题, 若识别到多个标题, 则以第一个为准.
-若想要输入域时间, 难度, 类型重复的标题, 可以在使用 \verb|\mbox{}| 解决:
+除去满足上面条件的参数，其余参数均视为标题，若识别到多个标题，则以第一个为准。
+若想要输入域时间，难度，类型重复的标题，可以在使用 \verb|\mbox{}| 解决：
 \begin{multicols}{2}
 	\begin{lstlisting}
     \begin{daily}[\mbox{theorem}]
@@ -126,17 +203,17 @@
 		正文
 	\end{daily}
 \end{multicols}
-标题未设置时, 默认为 \verb|\relax|.
+标题未设置时，默认为 \verb|\relax|。
 
 \subsection{字体}
-\verb|SYSUdaily.cls| 默认使用 \textsf{fandol} 字库, 因此不支持 pdf\LaTeX{}, 同时,
-在检测到存在时, 会调用Resource Han Rounded作为中文等宽字体.
+\verb|SYSUdaily.cls| 默认使用 \textsf{fandol} 字库，因此不支持 pdf\LaTeX{}，同时，
+在检测到存在时，会调用Resource Han Rounded作为中文等宽字体。
 
-当使用 \verb|unimath=true| 预设时, 会使用方正新书宋, 方正粗雅宋, 华文楷体, 苹方黑体作为中文字体, 且使用 Minion Pro 作为西文字体, 这些字体均是商业字体.
+当使用 \verb|unimath=true| 预设时，会使用方正新书宋、方正粗雅宋、方正新楷体、Noto Sans CJK SC作为中文字体，且使用 Minion Pro 作为西文字体，除去Noto Sans CJK SC外，以上字体均是商业字体。
 
 \subsection{数学字体}
 \label{ssec:math_fonts}
-\verb|SYSUdaily.cls| 默认使用以下宏包作为字体调用库:
+\verb|SYSUdaily.cls| 默认使用以下宏包作为字体调用库：
 \begin{itemize}[parsep=0pt,itemsep=0pt]
 	\item
 			\textsf{amsfonts}
@@ -149,55 +226,57 @@
 	\item
 			\textsf{eucal}
 \end{itemize}
-当使用 \verb|unimath=true| 预设时, 会使用 Minion Math 作为主要数学字体, 这款字体也是商业字体.
+当使用 \verb|unimath=true| 预设时，会使用 Minion Math 作为主要数学字体，这款字体也是商业字体。
 
 \section{宏包依赖}
 
-在任何情况下, 文档类都会显式调用以下宏包或文档类:
+在任何情况下，文档类都会显式调用以下宏包或文档类：
 \begin{itemize}[parsep=0pt,itemsep=0pt]
 	\item
-			\textsf{ctexart}. 中文排版的通用框架;
+			\textsf{ctexart}。中文排版的通用框架；
 	\item
-			\textsf{xcolor}. 提供色彩支持, 默认按 \verb|svgnames| 载入;
+			\textsf{xcolor}。提供色彩支持，默认按 \verb|svgnames| 载入；
 	\item
-			\textsf{amsmath}, \textsf{amsthm}. 数学框架;
+			\textsf{amsmath}、\textsf{amsthm}。数学框架；
 	\item
-			\textsf{fontspec}. 调整字体, 因此不支持 pdf\LaTeX{};
+			\textsf{fontspec}。调整字体，因此不支持 pdf\LaTeX{}；
 	\item
-			\textsf{geometry}. 用于调整页面尺寸;
+			\textsf{geometry}。用于调整页面尺寸；
 	\item
-			\textsf{eucal}. 调整手写数学字体样式;
+			\textsf{eucal}。调整手写数学字体样式；
 	\item
-			\textsf{fixdif}, \textsf{mathtools}. \textsf{amsmath}的扩展;
+			\textsf{fixdif}、\textsf{mathtools}。\textsf{amsmath}的扩展；
 	\item
-			\textsf{kvoptions}. 设置关键词之用;
+			\textsf{kvoptions}。设置关键词之用；
 	\item
-			\textsf{graphicx}. 提供图形插入的接口;
+			\textsf{graphicx}。提供图形插入的接口；
 	\item
-			\textsf{enumitem}. 设置列表环境格式.
+			\textsf{enumitem}。设置列表环境格式。
 \end{itemize}
-\verb|unimath=true| 预设会调用相关的字体宏包, 具体调用细节已在第 \ref{ssec:math_fonts} 小节中列出.
+\verb|unimath=true| 预设会调用相关的字体宏包，具体调用细节已在第 \ref{ssec:math_fonts} 小节中列出。
 
 \section{更新历史}
 \begin{flushleft}
 	\footnotesize
+	\textbf{v2.1}~(2024/04/04--2024/04/10)
+	\begin{itemize}[parsep=0pt,itemsep=0pt]
+		\item
+				更精确的日期检测（大于100的4、6、8 位整数），添加了开启和关闭日期显示的功能。
+	\end{itemize}
+  
 	\textbf{v2.0}~(2024/03/20--2024/04/04)
 	\begin{itemize}[parsep=0pt,itemsep=0pt]
 		\item
-				应用\LaTeX{3}重构代码;
+				应用\LaTeX{3}重构代码；
 		\item
-				添加 \verb|unimath| 文档类选项;
+				添加 \verb|unimath| 文档类选项；
 		\item
-				将原来的 \verb|theorem| 等环境简化为 \verb|daily| 环境;
+				将原来的 \verb|theorem| 等环境简化为 \verb|daily| 环境；
 		\item
-				使用 \textsf{l3seq} 处理 \verb|daily| 环境的可选参数, 利用更合理的判断机制实现输入上的简化;
+				使用 \textsf{l3seq} 处理 \verb|daily| 环境的可选参数，利用更合理的判断机制实现输入上的简化；
 		\item
-				去除随机图标.
+				去除随机图标。
 	\end{itemize}
 \end{flushleft}
-
-\begin{daily}[ \mbox{\tikz[overlay, remember picture]{\node at (current page.center){A};}} ]
-  
-\end{daily}
 
 \end{document}
