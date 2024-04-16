@@ -2,9 +2,9 @@
 
 ## 简介
 
-此文档类 `SYSUdaily.cls` 旨在建立一个简单易用的中山大学数学学院「每日一题」计划的排版渠道.
+此文档类 `SYSUDaily.cls` 旨在建立一个简单易用的中山大学数学学院「每日一题」计划的排版渠道.
 
-> 本文档为 `SYSUdaily.PDF` 的复刻版本, 但会有一定延时, 请以 `SYSUdaily.PDF` 文档内容为准.
+本文档为 `SYSUDaily.PDF` 的复刻版本, 但会有一定延时, 请以 `SYSUDaily.PDF` 文档内容为准.
 
 ## 免责声明
 
@@ -22,12 +22,12 @@
       - [标题](#标题)
     - [字体](#字体)
     - [数学字体](#数学字体)
-  - [宏包依赖](#宏包依赖)
-  - [更新历史](#更新历史)
+    - [宏包依赖](#宏包依赖)
+    - [更新历史](#更新历史)
 
 ## 介绍
 
-最早的一版用于中山大学数学学院「每日一题」计划排版的 LaTeX 模板由 Innocent 编写, 在 2023 年 10 月投入最初的使用. 2024 年 3 月, Panadol 重构了整个模板的代码, 现在代码托管在 [GitHub](https://github.com/Arcanadol/SYSUdaily) 上, 由 Innocent 和 Panadol 共同维护.
+最早的一版用于中山大学数学学院「每日一题」计划排版的 LaTeX 模板由 Innocent 编写, 在 2023 年 10 月投入最初的使用. 2024 年 3 月, Panadol 重构了整个模板的代码, 现在代码托管在 [GitHub](https://github.com/Arcanadol/SYSUDaily) 上, 由 Innocent 和 Panadol 共同维护.
 
 ## 使用方法
 
@@ -36,35 +36,71 @@
 本项目是中山大学数学学院每日一题的模板, 使用方法为:
 
 ```latex
-\begin{daily}[参数]
-  正文
-\end{daily}
+  \begin{daily}[参数]
+    正文
+  \end{daily}
 ```
-
 方括号 `[]` 中的参数的顺序不影响结果. 参数列表如下:
 
 #### 类型
 
-仅需输入类型命名即可确定 `SYSUdaily` 的类型. 所有类型定义及颜色如下:
+仅需输入类型命名即可确定 `SYSUDaily` 的类型. 所有类型定义及颜色如下:
 
-![1712425709735](https://github.com/Arcanadol/SYSUdaily/assets/104732548/932b4a42-7687-4caa-a0c7-03f4275ec12d)
+![1712425709735](https://github.com/Arcanadol/SYSUDaily/assets/104732548/932b4a42-7687-4caa-a0c7-03f4275ec12d)
 
 类型未设置时, 默认为 `proposition`.
 
 #### 日期
 
-日期为8, 6, 4位整数: `20101225`, `101225`, `1225` 分别代表三种不同的日期输入风格.
-日期未设置时, 默认为当天日期 `\today`:
+
+日期为8, 6, 4位整数: `19111225`, `111225`, `1225` 分别代表三种不同的日期输入风格.
+
+```latex
+\begin{daily}[19111225]
+    那是一个遥远的圣诞夜.
+  \end{daily}
+```
+![19111125](https://github.com/Arcanadol/SYSUDaily/assets/34578997/14b485d4-97e2-4ca3-9523-2979437ab44f)
+```latex
+\begin{daily}[111225]
+	我忘不了那年的圣诞节.
+\end{daily}
+```
+![111225](https://github.com/Arcanadol/SYSUDaily/assets/34578997/100f784e-b6f9-4209-bd5b-02ed1ae13577)
+```latex
+\begin{daily}[1225]
+	今年的圣诞节, 还要多久?
+\end{daily}
+```
+![1225](https://github.com/Arcanadol/SYSUDaily/assets/34578997/28f054e8-148c-47fa-b75f-e465d6a0c3b7)
+
+一个会被识别为日期的数字(严格的逻辑将会在未来补全), 但是格式错误时, 将不会显示任何东西:
+
+```latex
+\begin{daily}[125]
+	今天是 1 月 25 日? 异或 12 月 5 日?
+\end{daily}
+```
+![125](https://github.com/Arcanadol/SYSUDaily/assets/34578997/134efaa6-d6bb-45ec-aeb8-51baa88bda87)
+
+哦, 请不要把它当做关闭日期显示的开关, 我们提供 `\SYSUDailyNoShowDate` 来关闭日期显示, 也可以用 `\SYSUDailyDoShowDate` 来恢复开启.
+
+```latex
+\SYSUDailyNoShowDate
+\begin{daily}
+	今天几月几号, 我也不知道.
+\end{daily}
+```
+![??](https://github.com/Arcanadol/SYSUDaily/assets/34578997/923274bc-44dd-4b4a-ad27-1798b41c740e)
+
+日期未设置时, 默认为当天日期 `\today`: 
 
 ```latex
 \begin{daily}
-  \today{}.
+	今天是\today{}, 不是么?
 \end{daily}
 ```
-
-![1712425677560](https://github.com/Arcanadol/SYSUdaily/assets/104732548/0a01bcc2-4680-4136-b2f2-6ef34994076e)
-
-同时, 我们提供 `\SYSUDailyNoShowDate` 来关闭日期显示, 也可以用 `\SYSUDailyDoShowDate` 来恢复开启.
+![today](https://github.com/Arcanadol/SYSUDaily/assets/34578997/9343de6b-7980-4bef-be15-993487180bb4)
 
 #### 难度
 
@@ -76,14 +112,14 @@
 \end{daily}
 ```
 
-![1712425731009](https://github.com/Arcanadol/SYSUdaily/assets/104732548/85354b78-5e47-4ea1-9629-4711a094170c)
+![1712425731009](https://github.com/Arcanadol/SYSUDaily/assets/104732548/85354b78-5e47-4ea1-9629-4711a094170c)
 
 难度未设置时, 默认为 `0`.
 
 #### 标题
 
 除去满足上面条件的参数, 其余参数均视为标题, 若识别到多个标题, 则以第一个为准.
-若想要输入与时间, 难度, 类型重复的标题, 可以在使用 `\mbox{}` 解决:
+若想要输入域时间, 难度, 类型重复的标题, 可以在使用 `\mbox{}` 解决:
 
 ```latex
 \begin{daily}[\mbox{theorem}]
@@ -91,20 +127,20 @@
 \end{daily}
 ```
 
-![1712425740427](https://github.com/Arcanadol/SYSUdaily/assets/104732548/01e452bf-8209-46c9-8a49-cd3f462506f5)
+![我有我的标题](https://github.com/Arcanadol/SYSUDaily/assets/104732548/01e452bf-8209-46c9-8a49-cd3f462506f5)
 
 标题未设置时, 默认为 `\relax`.
 
 ### 字体
 
-`SYSUdaily.cls` 默认使用 fandol 字库, 因此不支持 pdfLaTeX, 同时,
+`SYSUDaily.cls` 默认使用 fandol 字库, 因此不支持 pdfLaTeX, 同时,
 在检测到存在时, 会调用 Resource Han Rounded 作为中文等宽字体.
 
-当使用 `unimath=true` 预设时, 会使用方正新书宋, 方正粗雅宋, 方正新楷体, Noto Sans CJK SC 作为中文字体, 且使用 Minion Pro 作为西文字体, 除去 Noto Sans CJK SC 外, 以上字体均是商业字体.
+当使用 `unimath=true` 预设时, 会使用方正新书宋, 方正粗雅宋, 华文楷体, 苹方黑体作为中文字体, 且使用 Minion Pro 作为西文字体, 这些字体均是商业字体.
 
 ### 数学字体
 
-`SYSUdaily.cls` 默认使用以下宏包作为字体调用库:
+`SYSUDaily.cls` 默认使用以下宏包作为字体调用库:
 
 - amsfonts
 - amssymb
@@ -133,15 +169,10 @@
 
 ### 更新历史
 
-**v2.1** (2024/04/04–2024/04/10)
-
-- 更精确的日期检测(大于 100 的 4, 6, 8 位整数), 添加了开启和关闭日期显示的功能.
-
 **v2.0** (2024/03/20–2024/04/04)
 
 - 应用 LaTeX3 重构代码;
 - 添加 `unimath` 文档类选项;
 - 将原来的 `theorem` 等环境简化为 `daily` 环境;
-- 使用 l3seq 处理 `daily` 环境的可选参数, 利用更合理的判断机制实现输入上的简化;
 - 使用 l3seq 处理 `daily` 环境的可选参数, 利用更合理的判断机制实现输入上的简化;
 - 去除随机图标.
