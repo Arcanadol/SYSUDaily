@@ -103,6 +103,7 @@
 			colback=#1color!3,
 			colframe=#1color!30,
 			coltitle=#1color,
+			watermark color=#1color,
 		}
 }
 
@@ -152,10 +153,10 @@
 \newcommand{\SYSUDaily@watermark} {
 	\bfseries \makebox[.79\textwidth][r]{
 		\smash{\rule[-8pt]{.8pt}{8pt+\baselineskip+1pt}}\hskip2mm
-		\makebox[0pt][l]{ \parbox{60pt}{ \vspace*{-.4ex}笃学笃行，\\[.1ex]不悔不倦。 }}\hspace*{8pt}
+		\makebox[0pt][l]{ \parbox{60pt}{\large\vspace*{-.4ex}笃学笃行，\\[.1ex]不悔不倦。 }}\hspace*{8pt}
 	}
 }
-
+\newcommand{\SYSUDaily@watermark@opacity}{0.5}
 \newlength{\SYSUDaily@width}
 \newlength{\SYSUDaily@height}
 \setlength{\SYSUDaily@height}{52pt}
@@ -171,6 +172,7 @@ title      = {\bfseries\ShowSYSUDaily@name{#1}
 		}\hfill{\ifx#2\empty\else\expandafter\SYSUDaily@Parameter@Date\fi}},%
 watermark~text = {\SYSUDaily@watermark},%
 underlay    = {\putstars{#3}{#1}},%
+watermark~opacity = \SYSUDaily@watermark@opacity,%
 fonttitle = {},
 }
 \newtcolorbox{SYSUDaily@empty}{%
@@ -285,7 +287,8 @@ fonttitle = {},
 	\dim_compare:nTF {\l_tmpa_dim > 26pt} {
 		\def\SYSUDaily@watermark{\bfseries 笃学笃行，不悔不倦。}
 		\def\SYSUDaily@right{2mm}
-	}{}
+		\def\SYSUDaily@watermark@opacity{0.1}
+	}{\def\SYSUDaily@watermark@opacity{1}}
 
 	\str_if_eq:nnTF {#1} {empty} {
 		\begin{SYSUDaily@empty}

@@ -78,7 +78,12 @@
 	\end{multicols}
 	\ExplSyntaxOff
 \end{quote}
-类型未设置时，默认为 \verb|proposition|。
+因为 \verb|proposition| 很容易拼错，类型未设置时，默认为命题。
+
+此外提供一个禅盒子
+\begin{daily}[empty]
+	最少的，就是最多的。
+\end{daily}
 \paragraph{日期}
 日期为8、6、4位整数：\verb|20101225|、\verb|101225|、\verb|1225| 分别代表三种不同的日期输入风格。
 
@@ -191,7 +196,7 @@
 难度未设置时，默认为 \verb|0|。
 \paragraph{标题}
 除去满足上面条件的参数，其余参数均视为标题，若识别到多个标题，则以第一个为准。
-若想要输入域时间，难度，类型重复的标题，可以在使用 \verb|\mbox{}| 解决：
+若想要输入与时间，难度，类型重复的标题，可以在使用 \verb|\mbox{}| 解决：
 \begin{multicols}{2}
 	\begin{lstlisting}
     \begin{daily}[\mbox{theorem}]
@@ -258,6 +263,11 @@
 \section{更新历史}
 \begin{flushleft}
 	\footnotesize
+	\textbf{v2.2}~(2024/04/10--2024/10/26)
+	\begin{itemize}[parsep=0pt,itemsep=0pt]
+		\item 微调水印样式
+	\end{itemize}
+
 	\textbf{v2.1}~(2024/04/04--2024/04/10)
 	\begin{itemize}[parsep=0pt,itemsep=0pt]
 		\item
