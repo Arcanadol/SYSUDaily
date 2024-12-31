@@ -153,7 +153,7 @@
 \newcommand{\SYSUDaily@watermark} {
 	\bfseries \makebox[.79\textwidth][r]{
 		\smash{\rule[-8pt]{.8pt}{8pt+\baselineskip+1pt}}\hskip2mm
-		\makebox[0pt][l]{ \parbox{60pt}{\large\vspace*{-.4ex}笃学笃行，\\[.1ex]不悔不倦。 }}\hspace*{8pt}
+		\makebox[0pt][l]{ \parbox{60pt}{\large\vspace*{-.4ex}笃学笃行\\[.1ex]不悔不倦 }}\hspace*{8pt}
 	}
 }
 \newcommand{\SYSUDaily@watermark@opacity}{0.5}
@@ -167,7 +167,7 @@
 
 \newtcolorbox{SYSUDaily@}[4]{%
 mathstyles = #1,%
-title      = {\bfseries\ShowSYSUDaily@name{#1}
+title      = {\bfseries\textsc{\ShowSYSUDaily@name{#1}}~
 		\exp_args:Nf\IfBlankTF{#4}{}{\the\value{SYSUDaily@counter}\stepcounter{SYSUDaily@counter}：#4%
 		}\hfill{\ifx#2\empty\else\expandafter\SYSUDaily@Parameter@Date\fi}},%
 watermark~text = {\SYSUDaily@watermark},%
@@ -183,13 +183,30 @@ watermark~text = {\SYSUDaily@watermark},
 fonttitle = {},
 }%
 
-\newcommand \SYSUDaily@Parameter@MathStyles { proposition }
+\tl_new:N \g_SYSUDaily_global_date_tl
 
+\bool_new:N \g_SYSUDaily_enable_date_check_bool
+\bool_gset_false:N \g_SYSUDaily_enable_date_check_bool
+\NewDocumentCommand{\SYSUDailySetGlobalDate}{m}{
+	\tl_gset:Nn \g_SYSUDaily_global_date_tl { #1 }
+}
+\NewDocumentCommand{\SYSUDailyEnableDateCheck}{}{
+	\bool_gset_true:N \g_SYSUDaily_enable_date_check_bool
+}
+\NewDocumentCommand{\SYSUDailyDisableDateCheck}{}{
+	\bool_gset_false:N \g_SYSUDaily_enable_date_check_bool
+}
+
+\newcommand \SYSUDaily@Parameter@MathStyles { proposition }
+\NewDocumentCommand{\SYSUDailySetDefaultMathStyle}{m}{
+	\cs_set:cpn { SYSUDaily@Parameter@MathStyles } { #1 }
+}
 \newcommand \SYSUDaily@Parameter@Title {}
 
 \newcommand \SYSUDaily@Parameter@Date {}
-
+\newcommand \SYSUDaily@Parameter@Origin@Date {}
 \newcommand \SYSUDaily@Parameter@Difficulty { 0 }
+
 
 \NewDocumentCommand{\SYSUDaily@check}{m}{
 	\seq_if_in:NnTF \c_math_styles_seq {#1}
@@ -204,7 +221,10 @@ fonttitle = {},
 			\int_compare:nTF {
 				#1 > 100
 			}
-			{ \SYSUDaily_set_date_format:n {#1}	}
+			{
+				\cs_set:cpn { SYSUDaily@Parameter@Origin@Date } { #1 }
+				\SYSUDaily_set_date_format:n {#1}
+			}
 			{
 				\int_compare:nTF {
 					#1 < 5
@@ -238,8 +258,8 @@ fonttitle = {},
 		\int_case:nnF { \tl_count:n {#1} }
 		{
 			{4}{\SYSUDaily_set_date_format_aux:nnnn #1}
-			{6}{\SYSUDaily_set_date_format_aux:nnnnnn #1}
-			{8}{\SYSUDaily_set_date_format_aux:nnnnnnnn #1}
+				{6}{\SYSUDaily_set_date_format_aux:nnnnnn #1}
+				{8}{\SYSUDaily_set_date_format_aux:nnnnnnnn #1}
 		}{
 			\def \SYSUDaily@Parameter@Date {}
 		}
@@ -270,12 +290,13 @@ fonttitle = {},
 	\int_compare:nTF { #1 = 0 } { #2 } { #1#2 }
 }
 
-\NewDocumentEnvironment{daily}{ O{} +b } {
-	\bool_if:NT \l_SYSUDaily_show_date_bool{
-	\def \SYSUDaily@Parameter@Date {\today}}
-	\seq_set_from_clist:Nn \l_tmpa_seq { #1 }
-	\seq_reverse:N \l_tmpa_seq
-	\seq_map_inline:Nn \l_tmpa_seq { \SYSUDaily@check { ##1 } }
+\bool_new:N \g_SYSUDaily_show_proof_bool
+\bool_gset_false:N \g_SYSUDaily_show_proof_bool
+
+\NewDocumentEnvironment{SYSUDaily@DisplayContent}{ O{} +b }{
+	% \seq_set_from_clist:Nn \l_tmpa_seq { #1 }
+	% \seq_reverse:N \l_tmpa_seq
+	% \seq_map_inline:Nn \l_tmpa_seq { \SYSUDaily@check { ##1 } }
 	\hbox_set:Nn \l_tmpa_box {
 		\begin{minipage}{\SYSUDaily@width}
 			\itshape #2
@@ -303,6 +324,43 @@ fonttitle = {},
 			#2
 		\end{SYSUDaily@}
 	}
+
+	\bool_gset_true:N \g_SYSUDaily_show_proof_bool
+}
+{}
+
+\NewDocumentEnvironment{daily}{ O{} +b } {
+	\bool_if:NT \l_SYSUDaily_show_date_bool {
+		\def \SYSUDaily@Parameter@Date {\today}
+	}
+
+	\seq_set_from_clist:Nn \l_tmpa_seq { #1 }
+	\seq_reverse:N \l_tmpa_seq
+	\seq_map_inline:Nn \l_tmpa_seq { \SYSUDaily@check { ##1 } }
+
+	\bool_if:NTF \g_SYSUDaily_enable_date_check_bool {
+		\str_if_eq:NNTF \g_SYSUDaily_global_date_tl \SYSUDaily@Parameter@Origin@Date {
+			\begin{SYSUDaily@DisplayContent}[#1]
+				#2
+			\end{SYSUDaily@DisplayContent}
+		}{
+			\bool_gset_false:N \g_SYSUDaily_show_proof_bool
+		}
+	}{
+		\begin{SYSUDaily@DisplayContent}[#1]
+			#2
+		\end{SYSUDaily@DisplayContent}
+	}
+}
+{}
+\def\proofname{解}
+\NewDocumentEnvironment{solution}{ +b } {
+	\bool_if:NTF \g_SYSUDaily_show_proof_bool {
+		\begin{proof}
+			\itshape #1
+		\end{proof}
+	}{
+	}
 }
 {}
 \ExplSyntaxOff
@@ -317,12 +375,12 @@ fonttitle = {},
 % https://github.com/CTeX-org/ctex-kit/commit/a841dabaac7c2dccacd1858ba96f6eb38adfb335
 % https://github.com/CTeX-org/ctex-kit/commit/aa5f00db05f12034845f8e5c4119971b5aae33ff
 \IfPackageAtLeastTF{xeCJK}{2022-08-05}{
-  \IfPackageAtLeastTF{xeCJK}{2022-08-31}{}{
-    \xpatchcmd \__xeCJK_check_for_xglue:
-      {\__xeCJK_if_last_glue:TF}
-      {\__xeCJK_if_last_glue:T}
-      {}{\PatchFailed}
-  }
+	\IfPackageAtLeastTF{xeCJK}{2022-08-31}{}{
+		\xpatchcmd \__xeCJK_check_for_xglue:
+		{\__xeCJK_if_last_glue:TF}
+		{\__xeCJK_if_last_glue:T}
+		{}{\PatchFailed}
+	}
 }{}
 \ExplSyntaxOff
 \xeCJKsetup{CJKecglue = {\hskip 0.25em plus 0.08\baselineskip}, xCJKecglue = true, CheckSingle= true}

@@ -72,27 +72,48 @@
 		\begin{itemize}
 			\seq_map_inline:Nn \c_math_styles_seq {
 			\item[\TestColour{#1color}]
-				\texttt{#1}
-				}
+			      \texttt{#1}
+			      }
 		\end{itemize}
 	\end{multicols}
 	\ExplSyntaxOff
 \end{quote}
-因为 \verb|proposition| 很容易拼错，类型未设置时，默认为命题。
+因为 \verb|proposition| 很容易拼错，类型未设置时，默认为命题，\verb|\SYSUDailySetDefaultMathStyle| 可以设置默认的数学样式，此处我们将默认设置为 \verb|theorem|。
+\SYSUDailySetDefaultMathStyle{theorem}
 
-此外提供一个禅盒子
-\begin{daily}[empty]
-	最少的，就是最多的。
+\begin{multicols}{2}
+	\begin{lstlisting}
+\begin{daily}
+  默认情况下，这是一个定理。
 \end{daily}
+\end{lstlisting}
+	\small
+	\begin{daily}
+		默认情况下，这是一个定理。
+	\end{daily}
+\end{multicols}
+\SYSUDailySetDefaultMathStyle{proposition}然后再切换回命题。此外提供一个禅盒子
+\begin{multicols}{2}
+	\begin{lstlisting}
+\begin{daily}[empty]
+  最少的，就是最多的。
+\end{daily}
+\end{lstlisting}
+	\small
+	\begin{daily}[empty]
+		最少的，就是最多的。
+	\end{daily}
+\end{multicols}
+
 \paragraph{日期}
 日期为8、6、4位整数：\verb|20101225|、\verb|101225|、\verb|1225| 分别代表三种不同的日期输入风格。
 
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-  \begin{daily}[19111225]
-    那是一个遥远的圣诞夜。
-  \end{daily}
+\begin{daily}[19111225]
+	那是一个遥远的圣诞夜。
+\end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}[19111225]
@@ -104,9 +125,9 @@
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-  \begin{daily}[111225]
-    我忘不了那年的圣诞节。
-  \end{daily}
+\begin{daily}[111225]
+	我忘不了那年的圣诞节。
+\end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}[111225]
@@ -118,9 +139,9 @@
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-  \begin{daily}[1225]
-    今年的圣诞节，还要多久？
-  \end{daily}
+\begin{daily}[1225]
+	今年的圣诞节，还要多久？
+\end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}[1225]
@@ -132,9 +153,9 @@
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-  \begin{daily}[125]
-		今天是 1 月 25 日？异或 12 月 5 日？
-  \end{daily}
+\begin{daily}[125]
+	今天是 1 月 25 日？异或 12 月 5 日？
+\end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}[125]
@@ -145,25 +166,26 @@
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-	\SYSUDailyNoShowDate
-	\begin{daily}
-		今天几月几号，我也不知道。
-	\end{daily}
+\SYSUDailyNoShowDate
+\begin{daily}
+	今天几月几号，我也不知道。
+\end{daily}
   \end{lstlisting}
 	\small
 	\SYSUDailyNoShowDate
 	\begin{daily}
 		今天几月几号，我也不知道。
 	\end{daily}
+	\SYSUDailyDoShowDate
 \end{multicols}
-\SYSUDailyDoShowDate
+
 日期未设置时，默认为当天日期 \verb|\today|：
 \begin{multicols}{2}
 	% \footnotesize
 	\begin{lstlisting}
-  \begin{daily}
-    今天是\today{}，不是么?
-  \end{daily}
+\begin{daily}
+	今天是\today{}，不是么?
+\end{daily}
   \end{lstlisting}
 	\small
 	\begin{daily}
@@ -171,8 +193,49 @@
 	\end{daily}
 \end{multicols}
 
+\paragraph{初步筛选功能}
+我们引入所谓的``日期筛选功能''，通过 \verb|\SYSUDailyEnableDateCheck| 和 \verb|\SYSUDailyDisableDateCheck| 开启或关闭日期检查，通过\verb|\SYSUDailySetGlobalDate| 设置全局日期，如果日期不符合要求，将不会显示任何内容，此外我们默认提供\verb|solution|环境，如果日期不符合要求，将会不显示解答。
 
+\begin{multicols}{2}
+	\begin{lstlisting}
+\SYSUDailyEnableDateCheck
+\SYSUDailySetGlobalDate{20250101}
+\begin{daily}[20250101, 新年快乐！]
+	这个日期会被挑选出来。
+\end{daily}
+\begin{solution}
+	\[2025 = \sum_{n=1}^9 n^3\]
+\end{solution}
+\end{lstlisting}
+	\small
+	\SYSUDailyEnableDateCheck\SYSUDailySetGlobalDate{20250101}
+	\begin{daily}[20250101, 新年快乐！]
+		这个日期会被挑选出来。
+	\end{daily}
+	\begin{solution}
+		\[2025 = \sum_{n=1}^9 n^3\]
+	\end{solution}
+\end{multicols}
 
+\begin{multicols}{2}
+	\begin{lstlisting}
+\begin{daily}[20241231, 该和过去说再见了]
+	这里写什么都没用。
+\end{daily}
+\begin{solution}
+	这里也一样。
+\end{solution}
+\end{lstlisting}
+	\small
+	\begin{daily}[20241231, 该和过去说再见了]
+		这里写什么都没用。
+	\end{daily}
+	\begin{solution}
+		这里也一样。
+	\end{solution}
+	\vspace*{3cm}
+\end{multicols}
+\SYSUDailyDisableDateCheck
 \paragraph{难度}
 难度为1--4的整数，否则不会识别为难度。
 \begin{lstlisting}
@@ -183,14 +246,14 @@
 \begin{daily}[解析函数的刻画, theorem, 20101010, 4]
 	令$\mathbb I$是$\mathbb R$中的某开区间，令$f\in \mathscr{C}^\infty(\mathbb  I)$，称其在$x_0$处解析，若在$x_0$某邻域内下式成立：
 	\[
-	f(x) = \sum_{n\geqslant0} a_n(x-x_0)^n.
+		f(x) = \sum_{n\geqslant0} a_n(x-x_0)^n.
 	\]
 	记为$f\in \mathscr{C}^\omega(x_0)$。任给$E\subset \mathbb I$，定义$\mathscr{C}^\omega(E)=\bigcap_{x\in E}\mathscr{C}^\omega(x)$。
 
 	现在证明：
 	$f\in \mathscr{C}^\omega(\mathbb I)$当且仅当任给$[\alpha,\beta]\in \mathbb I$，均有
 	\[
-			\sup\biggl\{~\biggl| \frac{f^{(n)}(x)}{n!} \biggr|^{1/n}\!;~n\geqslant 1, x\in [\alpha,\beta] ~\biggr\}   <\infty.
+		\sup\biggl\{~\biggl| \frac{f^{(n)}(x)}{n!} \biggr|^{1/n}\!;~n\geqslant 1, x\in [\alpha,\beta] ~\biggr\}   <\infty.
 	\]
 \end{daily}
 难度未设置时，默认为 \verb|0|。
@@ -211,7 +274,7 @@
 标题未设置时，默认为 \verb|\relax|。
 
 \subsection{字体}
-\verb|SYSUdaily.cls| 默认使用 \textsf{fandol} 字库，因此不支持 pdf\LaTeX{}，同时，
+\verb|SYSUDaily.cls| 默认使用 \textsf{fandol} 字库，因此不支持 pdf\LaTeX{}，同时，
 在检测到存在时，会调用Resource Han Rounded作为中文等宽字体。
 
 当使用 \verb|unimath=true| 预设时，会使用方正新书宋、方正粗雅宋、方正新楷体、Noto Sans CJK SC作为中文字体，且使用 Minion Pro 作为西文字体，除去Noto Sans CJK SC外，以上字体均是商业字体。
@@ -221,15 +284,15 @@
 \verb|SYSUdaily.cls| 默认使用以下宏包作为字体调用库：
 \begin{itemize}[parsep=0pt,itemsep=0pt]
 	\item
-			\textsf{amsfonts}
+	      \textsf{amsfonts}
 	\item
-			\textsf{amssymb}
+	      \textsf{amssymb}
 	\item
-			\textsf{mathrsfs}
+	      \textsf{mathrsfs}
 	\item
-			\textsf{dsfont}
+	      \textsf{dsfont}
 	\item
-			\textsf{eucal}
+	      \textsf{eucal}
 \end{itemize}
 当使用 \verb|unimath=true| 预设时，会使用 Minion Math 作为主要数学字体，这款字体也是商业字体。
 
@@ -238,54 +301,69 @@
 在任何情况下，文档类都会显式调用以下宏包或文档类：
 \begin{itemize}[parsep=0pt,itemsep=0pt]
 	\item
-			\textsf{ctexart}。中文排版的通用框架；
+	      \textsf{ctexart}。中文排版的通用框架；
 	\item
-			\textsf{xcolor}。提供色彩支持，默认按 \verb|svgnames| 载入；
+	      \textsf{xcolor}。提供色彩支持，默认按 \verb|svgnames| 载入；
 	\item
-			\textsf{amsmath}、\textsf{amsthm}。数学框架；
+	      \textsf{amsmath}、\textsf{amsthm}。数学框架；
 	\item
-			\textsf{fontspec}。调整字体，因此不支持 pdf\LaTeX{}；
+	      \textsf{fontspec}。调整字体，因此不支持 pdf\LaTeX{}；
 	\item
-			\textsf{geometry}。用于调整页面尺寸；
+	      \textsf{geometry}。用于调整页面尺寸；
 	\item
-			\textsf{eucal}。调整手写数学字体样式；
+	      \textsf{eucal}。调整手写数学字体样式；
 	\item
-			\textsf{fixdif}、\textsf{mathtools}。\textsf{amsmath}的扩展；
+	      \textsf{fixdif}、\textsf{mathtools}。\textsf{amsmath}的扩展；
 	\item
-			\textsf{kvoptions}。设置关键词之用；
+	      \textsf{kvoptions}。设置关键词之用；
 	\item
-			\textsf{graphicx}。提供图形插入的接口；
+	      \textsf{graphicx}。提供图形插入的接口；
 	\item
-			\textsf{enumitem}。设置列表环境格式。
+	      \textsf{enumitem}。设置列表环境格式。
 \end{itemize}
 \verb|unimath=true| 预设会调用相关的字体宏包，具体调用细节已在第 \ref{ssec:math_fonts} 小节中列出。
 
-\section{更新历史}
+\section{更新历史与展望}
+\setlist[itemize]{parsep=0pt,itemsep=0pt}
+
 \begin{flushleft}
 	\footnotesize
+	\textbf{目前计划}
+	\begin{itemize}
+		\item 强化日期检查功能，例如支持更多格式或是优化性能。
+		\item 统一目前的代码风格和命令名称。
+	\end{itemize}
+
+	\textbf{v2.3}~(2024/10/26--2024/12/31)
+	\begin{itemize}
+		\item 添加日期检查功能，可通过 \verb|\SYSUDailySetGlobalDate| 设置全局日期，通过 \verb|\SYSUDailyEnableDateCheck| 和 \verb|\SYSUDailyDisableDateCheck| 开启或关闭日期检查；
+		\item 优化 \verb|solution| 环境，支持根据日期检查结果控制内容的显示；
+		\item 添加 \verb|SYSUDailySetDefaultMathStyle| 命令，支持设置默认的数学样式。
+	\end{itemize}
+
 	\textbf{v2.2}~(2024/04/10--2024/10/26)
-	\begin{itemize}[parsep=0pt,itemsep=0pt]
+	\begin{itemize}
 		\item 微调水印样式
 	\end{itemize}
 
 	\textbf{v2.1}~(2024/04/04--2024/04/10)
 	\begin{itemize}[parsep=0pt,itemsep=0pt]
 		\item
-				更精确的日期检测（大于100的4、6、8 位整数），添加了开启和关闭日期显示的功能。
+		      更精确的日期检测（大于100的4、6、8 位整数），添加了开启和关闭日期显示的功能。
 	\end{itemize}
-  
+
 	\textbf{v2.0}~(2024/03/20--2024/04/04)
 	\begin{itemize}[parsep=0pt,itemsep=0pt]
 		\item
-				应用\LaTeX{3}重构代码；
+		      应用\LaTeX{3}重构代码；
 		\item
-				添加 \verb|unimath| 文档类选项；
+		      添加 \verb|unimath| 文档类选项；
 		\item
-				将原来的 \verb|theorem| 等环境简化为 \verb|daily| 环境；
+		      将原来的 \verb|theorem| 等环境简化为 \verb|daily| 环境；
 		\item
-				使用 \textsf{l3seq} 处理 \verb|daily| 环境的可选参数，利用更合理的判断机制实现输入上的简化；
+		      使用 \textsf{l3seq} 处理 \verb|daily| 环境的可选参数，利用更合理的判断机制实现输入上的简化；
 		\item
-				去除随机图标。
+		      去除随机图标。
 	\end{itemize}
 \end{flushleft}
 
