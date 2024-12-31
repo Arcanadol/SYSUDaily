@@ -48,7 +48,7 @@
 
 ![1712425709735](https://github.com/Arcanadol/SYSUDaily/assets/104732548/932b4a42-7687-4caa-a0c7-03f4275ec12d)
 
-类型未设置时, 默认为 `proposition`.
+因为 \verb|proposition| 很容易拼错，类型未设置时，默认为命题，`\SYSUDailySetDefaultMathStyle` 可以设置默认的数学样式，此处我们将默认设置为 `theorem`。
 
 #### 日期
 
@@ -101,6 +101,20 @@
 \end{daily}
 ```
 ![today](https://github.com/Arcanadol/SYSUDaily/assets/34578997/9343de6b-7980-4bef-be15-993487180bb4)
+
+我们引入所谓的``日期筛选功能''，通过 `\SYSUDailyEnableDateCheck` 和 `\SYSUDailyDisableDateCheck` 开启或关闭日期检查，通过 `\SYSUDailySetGlobalDate` 设置全局日期，如果日期不符合要求，将不会显示任何内容，此外我们默认提供 `solution` 环境，如果日期不符合要求，将会不显示解答。
+
+```
+\SYSUDailyEnableDateCheck
+\SYSUDailySetGlobalDate{20250101}
+\begin{daily}[20250101, 新年快乐！]
+	这个日期会被挑选出来。
+\end{daily}
+\begin{solution}
+	\[2025 = \sum_{n=1}^9 n^3\]
+\end{solution}
+```
+![image](https://github.com/user-attachments/assets/79fdf0c3-2c73-43b2-9428-7255a61ebd91)
 
 #### 难度
 
@@ -168,6 +182,26 @@
 `unimath=true` 预设会调用相关的字体宏包, 具体调用细节已在[此](#字体)中列出.
 
 ### 更新历史
+
+**目前计划**
+
+- 强化日期检查功能，例如支持更多格式或是优化性能。
+- 统一目前的代码风格和命令名称。
+
+**v2.3** (2024/10/26–2024/12/31)
+
+- 添加日期检查功能，可通过 \verb|\SYSUDailySetGlobalDate| 设置全局日期，通过 \verb|\SYSUDailyEnableDateCheck| 和 \verb|\SYSUDailyDisableDateCheck| 开启或关闭日期检查；
+- 优化 \verb|solution| 环境，支持根据日期检查结果控制内容的显示；
+- 添加 \verb|SYSUDailySetDefaultMathStyle| 命令，支持设置默认的数学样式。
+	\end{itemize}
+
+**v2.2** (2024/04/10–2024/10/26)
+
+- 微调水印样式
+
+**v2.1** (2024/04/04–2024/04/10)
+
+- 更精确的日期检测（大于100的4、6、8 位整数），添加了开启和关闭日期显示的功能。
 
 **v2.0** (2024/03/20–2024/04/04)
 
