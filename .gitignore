@@ -1,0 +1,13 @@
+*.toc
+*.out
+*.log
+*.idx
+*.clo
+*.pdf
+*.gz
+*.glo
+*.hd
+*.aux
+*.cls
+*.tex
+New
