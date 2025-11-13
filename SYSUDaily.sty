@@ -1,29 +1,58 @@
-
+%%
+%% This is file `SYSUDaily.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% SYSUDaily.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2024--2025 by Innocent <InnocentFIVE@outlook.com>
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3c of this license or (at your option) any later
+%% version. The latest version of this license is in:
+%% 
+%% http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of
+%% LaTeX version 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Innocent.
+%% 
+%% This work consists of the files SYSUDaily.dtx,
+%% and README.md.
+%% 
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
 \GetIdInfo $Id: SYSUDaily.dtx 0.3 2025-10-28 12:00:00Z Innocent <InnocentFIVE@outlook.com> $
-{SYSUDaily}
-\ProvidesExplPackage{\ExplFileName} {2025-11-09} {}
-{A package for `Daily Question' for School of Mathematics, Sun Yat-Sen University}
+  {SYSUDaily}
+\ProvidesExplPackage{\ExplFileName}
+{2025-11-09} {} {A package for `Daily Question' for School of Mathematics, Sun Yat-Sen University}
 
 
-\RequirePackage [ skins, most, breakable ] { tcolorbox }
 
-\RequirePackage { xtemplate, expl3, l3keys2e }
-\RequirePackage { tikz }
-\RequirePackage { amsmath , amssymb , amsthm }
 
-\msg_new:nnn { SYSUDaily } { l3-too-old } {
+
+
+
+
+\RequirePackage { xtemplate, l3keys2e }
+\msg_new:nnn { SYSUDaily } { l3-too-old }
+{
     Package~ `#1'~ is~ too~ old. \\\\
     Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
     `l3kernel'~ and~ `l3packages'~ using~ your~ TeX~ package \\
     manager~ or~ from~ CTAN.
 }
-\IfPackageAtLeastTF { xtemplate } { 2020-07-17 }
-{ } { \msg_error:nnn { SYSUDaily } { l3-too-old } { #1 } }
-
+\clist_map_inline:nn { xtemplate, l3keys2e }
+{
+    \@ifpackagelater {#1} { 2020/07/17 }
+    { } { \msg_error:nnn { SYSUDaily } { l3-too-old } {#1} }
+}
 \int_new:N \g__SYSUDaily_counter_int
 \int_new:N \l__SYSUDaily_box_tmpa_difficulty_int
-
 \dim_new:N \g__SYSUDaily_box_right_low_dim
 \dim_new:N \g__SYSUDaily_box_right_high_dim
 \dim_set:Nn \g__SYSUDaily_box_right_high_dim { 2mm }
@@ -62,7 +91,6 @@
 \tl_set:Nn \g__SYSUDaily_box_watermark_low_color_mixing_tl { 100 }
 \tl_new:N \g__SYSUDaily_box_default_mathstyle_tl
 \tl_new:N \g__SYSUDaily_solution_name_tl
-
 \box_new:N \l__SYSUDaily_tmpa_box
 \box_new:N \l__SYSUDaily_tmpa_measure_box
 
@@ -90,19 +118,15 @@
 \cs_new:Nn \__SYSUDaily_box_watermark_high_text_format: { }
 \cs_new:Nn \__SYSUDaily_box_watermark_high_align: { }
 \cs_new:Nn \__SYSUDaily_box_watermark_low_align: { }
-
-\msg_new:nnn { SYSUDaily } { unidentified-language } {
-    The~ option~ `lang'~ must~ be~ one~ of~ `Chinese'~ or~ `English'
-}
-
-
+\RequirePackage [ skins, most, breakable ] { tcolorbox }
+\RequirePackage { amsmath , amssymb , amsthm }
 \keys_define:nn { SYSUDaily } {
     language                  .choices:nn = { chinese, english } {
-            \str_case:nn { #1 } {
-                { chinese } { \bool_gset_true:N \c__SYSUDaily_chinese_bool }
-                    { english } { \bool_gset_false:N \c__SYSUDaily_chinese_bool }
-            }
-        },
+    \str_case:nn { #1 } {
+            { chinese } { \bool_gset_true:N \c__SYSUDaily_chinese_bool }
+            { english } { \bool_gset_false:N \c__SYSUDaily_chinese_bool }
+        }
+    },
     language                  .initial:n  = chinese,
     title / show              .bool_set:N = \g__SYSUDaily_show_title_bool,
     title / show              .initial:n  = true,
@@ -126,20 +150,20 @@
     watermark / high / text   .tl_set:N   = \g__SYSUDaily_box_watermark_high_text_tl,
     watermark / low / text    .tl_set:N   = \g__SYSUDaily_box_watermark_low_text_tl,
     watermark / high / align  .choices:nn = { left, right, center } {
-            \str_case:nn { #1 } {
-                { left }    { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \raggedright } }
-                    { right }   { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \raggedleft } }
-                    { center }  { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \centering } }
-            }
-        },
+    \str_case:nn { #1 } {
+            { left }    { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \raggedright } }
+            { right }   { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \raggedleft } }
+            { center }  { \cs_set:Nn \__SYSUDaily_box_watermark_high_align: { \centering } }
+        }
+    },
     watermark / high / align  .initial:n  = center,
     watermark / low / align   .choices:nn = { left, right, center } {
-            \str_case:nn { #1 } {
-                { left }    { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \raggedright } }
-                    { right }   { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \raggedleft } }
-                    { center }  { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \centering } }
-            }
-        },
+    \str_case:nn { #1 } {
+            { left }    { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \raggedright } }
+            { right }   { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \raggedleft } }
+            { center }  { \cs_set:Nn \__SYSUDaily_box_watermark_low_align: { \centering } }
+        }
+    },
     watermark / low / align   .initial:n  = right,
     watermark / low / width   .dim_set:N  = \g__SYSUDaily_box_watermark_low_text_width_dim,
     watermark / high / width  .dim_set:N  = \g__SYSUDaily_box_watermark_high_text_width_dim,
@@ -164,73 +188,10 @@
     watermark / high / format .cs_set:Np  = \__SYSUDaily_box_watermark_high_text_format:,
     solution  / name          .tl_set:N   = \g__SYSUDaily_solution_name_tl
 }
-
 \ProcessKeyOptions [ SYSUDaily ]
 \NewDocumentCommand { \SYSUDailySetup } { m } {
     \keys_set:nn { SYSUDaily } { #1 }
 }
-
-\seq_set_from_clist:Nn \c__SYSUDaily_math_styles_seq {
-    theorem, definition, proposition, lemma, corollary, fact, example, think, calculate, brain, empty
-}
-
-\definecolor { __SYSUDaily_theorem_color } { RGB } { 12, 12, 150 }
-\definecolor { __SYSUDaily_definition_color } { RGB } { 220, 20, 60 }
-\definecolor { __SYSUDaily_proposition_color } { RGB } { 32, 115, 54 }
-\definecolor { __SYSUDaily_lemma_color } { RGB } { 0, 169, 153 }
-\definecolor { __SYSUDaily_corollary_color } { RGB } { 70, 130, 180 }
-\definecolor { __SYSUDaily_fact_color } { RGB } { 119, 136, 153 }
-\definecolor { __SYSUDaily_example_color } { RGB } { 255, 182, 193 }
-\definecolor { __SYSUDaily_think_color } { RGB } { 30, 144, 255 }
-\definecolor { __SYSUDaily_calculate_color } { RGB } { 139, 69, 19 }
-\definecolor { __SYSUDaily_brain_color } { RGB } { 0, 127, 127 }
-\definecolor { __SYSUDaily_empty_color } { RGB } { 0, 0, 0 }
-
-\seq_map_inline:Nn \c__SYSUDaily_math_styles_seq {
-    \keys_define:nn { SYSUDaily } {
-        daily / #1 / name .code:n = {
-                \tl_set:cn { g__SYSUDaily_box_ #1 _name_tl } { ##1 }
-            },
-        daily / #1 / color .code:n = {
-                \colorlet { __SYSUDaily_ #1 _color } { ##1 }
-            }
-    }
-}
-
-\tl_set:Nn \g__SYSUDaily_box_watermark_low_tl {
-    \__SYSUDaily_box_watermark_low_text_format:
-    \hbox_set:Nn \l__SYSUDaily_tmpa_box {
-        \tl_use:N \g__SYSUDaily_box_before_watermark_low_text_tl
-        \parbox
-        { \g__SYSUDaily_box_watermark_low_text_width_dim }
-        { \__SYSUDaily_box_watermark_low_align: \tl_use:N \g__SYSUDaily_box_watermark_low_text_tl }
-        \tl_use:N \g__SYSUDaily_box_after_watermark_low_text_tl
-    }
-    \box_scale:Nnn \l__SYSUDaily_tmpa_box
-    { \g__SYSUDaily_watermark_low_xscale_fp  }
-    { \g__SYSUDaily_watermark_low_yscale_fp }
-    \hbox_to_wd:nn { \textwidth } {
-        \tex_hss:D
-        \box_use:N \l__SYSUDaily_tmpa_box
-    }
-}
-
-\tl_set:Nn \g__SYSUDaily_box_watermark_high_tl {
-    \__SYSUDaily_box_watermark_high_text_format:
-    \hbox_set:Nn \l__SYSUDaily_tmpa_box {
-        \tl_use:N \g__SYSUDaily_box_before_watermark_high_text_tl
-        \parbox
-        { \g__SYSUDaily_box_watermark_high_text_width_dim }
-        { \__SYSUDaily_box_watermark_high_align: \tl_use:N \g__SYSUDaily_box_watermark_high_text_tl }
-        \tl_use:N \g__SYSUDaily_box_after_watermark_high_text_tl
-    }
-    \box_scale:Nnn \l__SYSUDaily_tmpa_box
-    { \g__SYSUDaily_watermark_high_xscale_fp  }
-    { \g__SYSUDaily_watermark_high_yscale_fp }
-    \box_use:N \l__SYSUDaily_tmpa_box
-}
-
-
 \bool_if:NTF \c__SYSUDaily_chinese_bool {
     \IfClassLoadedTF { ctexart } { } {
         \IfClassLoadedTF { ctexbook } { } {
@@ -243,7 +204,9 @@
     { \cs_set:Nn \__SYSUDaily_CJKecglue: { \skip_horizontal:N \tex_xkanjiskip:D } }
     { \cs_set:Nn \__SYSUDaily_CJKecglue: { \CJKecglue } }
     \seq_set_from_clist:Nn \c__SYSUDaily_math_styles_name_seq {
-        定理, 定义, 命题, 引理, 推论, 事实, 例子, 思考题, 计算题, 脑筋急转弯, { }
+        定理, 定义, 命题, 引理,
+        推论, 事实, 例子, 思考题,
+        计算题, 脑筋急转弯, { }
     }
     \dim_set:Nn \g__SYSUDaily_box_watermark_low_text_width_dim { 4em }
     \dim_set:Nn \g__SYSUDaily_box_watermark_high_text_width_dim { 150 pt }
@@ -280,7 +243,9 @@
 
 } {
     \seq_set_from_clist:Nn \c__SYSUDaily_math_styles_name_seq {
-        Theorem, Definition, Proposition, Lemma, Corollary, Fact, Example, Thought-provoking~ question, Calculation~ question, Brain~ teaser, { }
+        Theorem, Definition, Proposition, Lemma,
+        Corollary, Fact, Example, Thought-provoking~ question,
+        Calculation~ question, Brain~ teaser, { }
     }
     \dim_set:Nn \g__SYSUDaily_box_right_low_dim { 7em + 2mm }
     \dim_set:Nn \g__SYSUDaily_box_indent_dim { 2 em }
@@ -297,7 +262,11 @@
     }
     \tl_set:Nn \g__SYSUDaily_box_watermark_high_text_tl { Duxing }
     \tl_set:Nn \g__SYSUDaily_box_before_watermark_low_text_tl { \tex_hss:D }
-    \tl_set:Nn \g__SYSUDaily_box_after_watermark_low_text_tl { \skip_horizontal:n { 1mm } \color { . } \tex_vrule:D \@width 0.8pt \skip_horizontal:n { 3mm } }
+    \tl_set:Nn \g__SYSUDaily_box_after_watermark_low_text_tl {
+        \skip_horizontal:n { 1mm } \color { . }
+        \tex_vrule:D \@width 0.8pt
+        \skip_horizontal:n { 3mm }
+    }
     \tl_set:Nn \g__SYSUDaily_solution_name_tl { Solution }
     \dim_set:Nn \g__SYSUDaily_box_watermark_low_text_width_dim { 100 pt }
     \dim_set:Nn \g__SYSUDaily_box_watermark_high_text_width_dim { 150 pt }
@@ -350,34 +319,60 @@
     \tl_set:cn { g__SYSUDaily_box_ \seq_item:Nn \c__SYSUDaily_math_styles_seq { #1 } _name_tl }
     { \seq_item:Nn \c__SYSUDaily_math_styles_name_seq { #1 } }
 }
-
-
+\seq_set_from_clist:Nn \c__SYSUDaily_math_styles_seq {
+    theorem, definition, proposition, lemma,
+    corollary, fact, example, think, calculate,
+    brain, empty
+}
+\definecolor { __SYSUDaily_theorem_color } { RGB } { 12, 12, 150 }
+\definecolor { __SYSUDaily_definition_color } { RGB } { 220, 20, 60 }
+\definecolor { __SYSUDaily_proposition_color } { RGB } { 32, 115, 54 }
+\definecolor { __SYSUDaily_lemma_color } { RGB } { 0, 169, 153 }
+\definecolor { __SYSUDaily_corollary_color } { RGB } { 70, 130, 180 }
+\definecolor { __SYSUDaily_fact_color } { RGB } { 119, 136, 153 }
+\definecolor { __SYSUDaily_example_color } { RGB } { 255, 182, 193 }
+\definecolor { __SYSUDaily_think_color } { RGB } { 30, 144, 255 }
+\definecolor { __SYSUDaily_calculate_color } { RGB } { 139, 69, 19 }
+\definecolor { __SYSUDaily_brain_color } { RGB } { 0, 127, 127 }
+\definecolor { __SYSUDaily_empty_color } { RGB } { 0, 0, 0 }
+\seq_map_inline:Nn \c__SYSUDaily_math_styles_seq {
+    \keys_define:nn { SYSUDaily } {
+        daily / #1 / name .code:n = {
+                \tl_set:cn { g__SYSUDaily_box_ #1 _name_tl } { ##1 }
+            },
+        daily / #1 / color .code:n = {
+                \colorlet { __SYSUDaily_ #1 _color } { ##1 }
+            }
+    }
+}
 \tcbset {
     mathstyles / .style = {
-            before                 = { \medskip \tex_par:D \tex_noindent:D },
-            after                  = { \skip_vertical:n { -3pt } },
-            enhanced,
-            toprule                = 3pt,
-            fonttitle              = \bfseries,
-            fontupper              = \slshape,
-            arc                    = 0mm,
-            outer~ arc             = 0mm,
-            before~ skip~ balanced = 2mm,
-            after~ skip~ balanced  = 3mm,
-            boxrule                = 1pt,
-            left                   = 3mm,
-            top                    = 1mm,
-            bottom                 = 1mm,
-            lefttitle              = 0pt,
-            righttitle             = 0pt,
-            height~ from           = 6em~ to~ \paperheight,
-            colback                = __SYSUDaily_ #1 _color ! \tl_use:N \g__SYSUDaily_box_background_color_mixing_tl,
-            colframe               = __SYSUDaily_ #1 _color ! \tl_use:N \g__SYSUDaily_box_frame_color_mixing_tl,
-            coltitle               = __SYSUDaily_ #1 _color ! \tl_use:N \g__SYSUDaily_box_tilte_color_mixing_tl,
-            watermark~ zoom        = 1,
-        }
+        before                 = { \medskip \tex_par:D \tex_noindent:D },
+        after                  = { \skip_vertical:n { -3pt } },
+        enhanced,
+        toprule                = 3pt,
+        fonttitle              = \bfseries,
+        fontupper              = \slshape,
+        arc                    = 0mm,
+        outer~ arc             = 0mm,
+        before~ skip~ balanced = 2mm,
+        after~ skip~ balanced  = 3mm,
+        boxrule                = 1pt,
+        left                   = 3mm,
+        top                    = 1mm,
+        bottom                 = 1mm,
+        lefttitle              = 0pt,
+        righttitle             = 0pt,
+        height~ from           = 6em~ to~ \paperheight,
+        colback                = __SYSUDaily_ #1 _color !
+                                 \tl_use:N \g__SYSUDaily_box_background_color_mixing_tl,
+        colframe               = __SYSUDaily_ #1 _color !
+                                 \tl_use:N \g__SYSUDaily_box_frame_color_mixing_tl,
+        coltitle               = __SYSUDaily_ #1 _color !
+                                 \tl_use:N \g__SYSUDaily_box_tilte_color_mixing_tl,
+        watermark~ zoom        = 1,
+    }
 }
-
 \cs_new:Nn \__SYSUDaily_put_stars:nn {
     \begin{tcbclipinterior}
         \hbox_set:Nn \l__SYSUDaily_tmpa_box {
@@ -392,8 +387,6 @@
         ( [ xshift = 4mm ] interior . north~ west );
     \end{tcbclipinterior}
 }
-
-
 \cs_new:Nn \__SYSUDaily_box_parse_for_title:nnn {
     \bfseries
     \textsc { \use:c { g__SYSUDaily_box_ #1 _name_tl } }
@@ -411,27 +404,25 @@
     \tex_hfill:D
     #3
 }
-
 \newtcolorbox { __SYSUDaily_box } [ 8 ] {
-mathstyles         = #1,
-title              = \__SYSUDaily_box_parse_for_title:nnn { #1 } { #4 } { #2 } \tex_kern:D -#6,
-watermark~ text    = { #5 },
-underlay           = { \__SYSUDaily_put_stars:nn { #1 } { #3 } },
-watermark~ color   = __SYSUDaily_ #1 _color ! #8,
-watermark~ opacity = #7,
-right              = { #6 }
+    mathstyles         = #1,
+    title              = \__SYSUDaily_box_parse_for_title:nnn { #1 } { #4 } { #2 }
+                         \tex_kern:D -#6,
+    watermark~ text    = { #5 },
+    underlay           = { \__SYSUDaily_put_stars:nn { #1 } { #3 } },
+    watermark~ color   = __SYSUDaily_ #1 _color ! #8,
+    watermark~ opacity = #7,
+    right              = { #6 }
 }
 
 \newtcolorbox { __SYSUDaily_box_empty } [ 8 ] {
-mathstyles         = #1,
-watermark~ text    = { #5 },
-underlay           = { \__SYSUDaily_put_stars:nn { #1 } { #3 } },
-watermark~ color   = __SYSUDaily_ #1 _color ! #8,
-watermark~ opacity = #7,
-right              = { #6 }
+    mathstyles         = #1,
+    watermark~ text    = { #5 },
+    underlay           = { \__SYSUDaily_put_stars:nn { #1 } { #3 } },
+    watermark~ color   = __SYSUDaily_ #1 _color ! #8,
+    watermark~ opacity = #7,
+    right              = { #6 }
 }
-
-
 \cs_new:Nn \__SYSUDaily_box_check:nnnnn {
     \seq_if_in:NnTF \c__SYSUDaily_math_styles_seq { #1 } {
         \tl_set:Nn #2 { #1 }
@@ -453,23 +444,22 @@ right              = { #6 }
         }
     }
 }
-
+\cs_set:Npn \__SYSUDaily_remove_zero_from_head:n #1 #2 {
+    \int_compare:nTF { #1 = 0 } { #2 } { #1 #2 }
+}
 \cs_new:Nn \SYSUDaily_set_date_format:Nn {
     \bool_if:NT \g__SYSUDaily_show_date_bool {
         \int_case:nnF { \tl_count:n { #2 } } {
-            { 4 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1 \scan_stop: \scan_stop: \scan_stop: \scan_stop: #2 }
-                { 6 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1 \scan_stop: \scan_stop: #2 }
-                { 8 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1 #2 }
+            { 4 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1
+                    \scan_stop: \scan_stop: \scan_stop: \scan_stop: #2 }
+            { 6 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1
+                        \scan_stop: \scan_stop: #2 }
+            { 8 } { \__SYSUDaily_set_date_format_aux:Nnnnnnnnn #1 #2 }
         } {
             \tl_set:Nn #1 { }
         }
     }
 }
-
-\cs_set:Npn \__SYSUDaily_remove_zero_from_head:n #1 #2 {
-    \int_compare:nTF { #1 = 0 } { #2 } { #1 #2 }
-}
-
 \cs_set:Nn \__SYSUDaily_box_high_aux:nnnnn {
     \str_if_eq:nnTF { #1 } { empty } {
         \begin { __SYSUDaily_box_empty } { empty } { } { 0 } { } { }
@@ -477,14 +467,16 @@ right              = { #6 }
         #5
         \end { __SYSUDaily_box_empty }
     } {
-        \bool_if:NTF \g__SYSUDaily_show_title_bool { \begin { __SYSUDaily_box } } { \begin { __SYSUDaily_box_empty } }
+        \bool_if:NTF \g__SYSUDaily_show_title_bool
+        { \begin { __SYSUDaily_box } } { \begin { __SYSUDaily_box_empty } }
         { #1 } { #2 } { #3 } { #4 }
         { \tl_use:N \g__SYSUDaily_box_watermark_high_tl }
         { \dim_use:N \g__SYSUDaily_box_right_high_dim }
         { \fp_use:N \l__SYSUDaily_watermark_high_opacity_fp }
         { \tl_use:N \g__SYSUDaily_box_watermark_high_color_mixing_tl }
         #5
-        \bool_if:NTF \g__SYSUDaily_show_title_bool { \end { __SYSUDaily_box } } { \end { __SYSUDaily_box_empty } }
+        \bool_if:NTF \g__SYSUDaily_show_title_bool
+        { \end { __SYSUDaily_box } } { \end { __SYSUDaily_box_empty } }
     }
 }
 
@@ -495,14 +487,16 @@ right              = { #6 }
         #5
         \end { __SYSUDaily_box_empty }
     } {
-        \bool_if:NTF \g__SYSUDaily_show_title_bool { \begin { __SYSUDaily_box } } { \begin { __SYSUDaily_box_empty } }
+        \bool_if:NTF \g__SYSUDaily_show_title_bool
+        { \begin { __SYSUDaily_box } } { \begin { __SYSUDaily_box_empty } }
         { #1 } { #2 } { #3 } { #4 }
         { \tl_use:N \g__SYSUDaily_box_watermark_low_tl }
         { \dim_use:N \g__SYSUDaily_box_right_low_dim }
         { \fp_use:N \l__SYSUDaily_watermark_low_opacity_fp }
         { \tl_use:N \g__SYSUDaily_box_watermark_low_color_mixing_tl }
         #5
-        \bool_if:NTF \g__SYSUDaily_show_title_bool { \end { __SYSUDaily_box } } { \end { __SYSUDaily_box_empty } }
+        \bool_if:NTF \g__SYSUDaily_show_title_bool
+        { \end { __SYSUDaily_box } } { \end { __SYSUDaily_box_empty } }
     }
 }
 
@@ -517,7 +511,8 @@ right              = { #6 }
     \bool_if:NT \g__SYSUDaily_show_date_bool {
         \tl_set:Ne \l__SYSUDaily_box_tmpa_date_tl { \today }
     }
-    \tl_set:Nn \l__SYSUDaily_box_tmpa_mathstyle_tl { \tl_use:N \g__SYSUDaily_box_default_mathstyle_tl }
+    \tl_set:Nn \l__SYSUDaily_box_tmpa_mathstyle_tl
+    { \tl_use:N \g__SYSUDaily_box_default_mathstyle_tl }
     \seq_reverse:N \l__SYSUDaily_tmpa_seq
     \seq_map_inline:Nn \l__SYSUDaily_tmpa_seq {
         \__SYSUDaily_box_check:nnnnn { ##1 }
@@ -530,10 +525,14 @@ right              = { #6 }
         \exp_args:Nf \dim_compare:nTF { \box_ht:N \l__SYSUDaily_tmpa_measure_box > 26 pt }
         { \exp_not:N \__SYSUDaily_box_high_aux:nnnnn }
         { \exp_not:N \__SYSUDaily_box_low_aux:nnnnn }
-        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w \tl_use:N \l__SYSUDaily_box_tmpa_mathstyle_tl } }
-        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w \tl_use:N \l__SYSUDaily_box_tmpa_date_tl } }
-        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w \int_use:N \l__SYSUDaily_box_tmpa_difficulty_int } }
-        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w \tl_use:N \l__SYSUDaily_box_tmpa_title_tl } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w
+          \tl_use:N \l__SYSUDaily_box_tmpa_mathstyle_tl } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w
+          \tl_use:N \l__SYSUDaily_box_tmpa_date_tl } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w
+          \int_use:N \l__SYSUDaily_box_tmpa_difficulty_int } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w
+          \tl_use:N \l__SYSUDaily_box_tmpa_title_tl } }
     } {
         \dim_set_eq:NN \tex_parindent:D \g__SYSUDaily_box_indent_dim
         \tex_noindent:D
@@ -541,8 +540,44 @@ right              = { #6 }
     }
     \group_end:
 } { }
-
 \NewDocumentEnvironment { solution } { } {
-    \begin{proof} [ \tl_use:N \g__SYSUDaily_solution_name_tl ]
+    \begin { proof } [ \tl_use:N \g__SYSUDaily_solution_name_tl ]
         \slshape
-        } { \end{proof} }
+} { \end { proof } }
+\tl_set:Nn \g__SYSUDaily_box_watermark_low_tl {
+    \__SYSUDaily_box_watermark_low_text_format:
+    \hbox_set:Nn \l__SYSUDaily_tmpa_box {
+        \tl_use:N \g__SYSUDaily_box_before_watermark_low_text_tl
+        \parbox
+        { \g__SYSUDaily_box_watermark_low_text_width_dim }
+        { \__SYSUDaily_box_watermark_low_align:
+        \tl_use:N \g__SYSUDaily_box_watermark_low_text_tl }
+        \tl_use:N \g__SYSUDaily_box_after_watermark_low_text_tl
+    }
+    \box_scale:Nnn \l__SYSUDaily_tmpa_box
+    { \g__SYSUDaily_watermark_low_xscale_fp  }
+    { \g__SYSUDaily_watermark_low_yscale_fp }
+    \hbox_to_wd:nn { \textwidth } {
+        \tex_hss:D
+        \box_use:N \l__SYSUDaily_tmpa_box
+    }
+}
+
+\tl_set:Nn \g__SYSUDaily_box_watermark_high_tl {
+    \__SYSUDaily_box_watermark_high_text_format:
+    \hbox_set:Nn \l__SYSUDaily_tmpa_box {
+        \tl_use:N \g__SYSUDaily_box_before_watermark_high_text_tl
+        \parbox
+        { \g__SYSUDaily_box_watermark_high_text_width_dim }
+        { \__SYSUDaily_box_watermark_high_align:
+        \tl_use:N \g__SYSUDaily_box_watermark_high_text_tl }
+        \tl_use:N \g__SYSUDaily_box_after_watermark_high_text_tl
+    }
+    \box_scale:Nnn \l__SYSUDaily_tmpa_box
+    { \g__SYSUDaily_watermark_high_xscale_fp  }
+    { \g__SYSUDaily_watermark_high_yscale_fp }
+    \box_use:N \l__SYSUDaily_tmpa_box
+}
+\endinput
+%%
+%% End of file `SYSUDaily.sty'.

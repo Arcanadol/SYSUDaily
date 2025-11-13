@@ -1,0 +1,973 @@
+% \iffalse meta-comment
+% !TeX program  = XeLaTeX
+% !TeX encoding = UTF-8
+%
+% Copyright (C) 2024--2025 by Innocent <InnocentFIVE@outlook.com>
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3c of this license or (at your option) any later
+% version. The latest version of this license is in:
+%
+%   http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of
+% LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Innocent.
+%
+% This work consists of the files SYSUDaily.dtx,
+%           and the derived files SYSUDaily.cls,
+%                                 SYSUDaily.cls,
+%                                 SYSUDaily.pdf,
+%                             and README.md.
+%
+%<*internal>
+\iffalse
+    %</internal>
+    %
+    %<*readme>
+    README
+    %</readme>
+    %
+    %<*internal>
+\fi
+\begingroup
+\def\NameOfLaTeXe{LaTeX2e}
+\expandafter\endgroup\ifx\NameOfLaTeXe\fmtname\else
+\csname fi\endcsname
+%</internal>
+%
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+
+\preamble
+
+Copyright (C) 2024--2025 by Innocent <InnocentFIVE@outlook.com>
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either
+version 1.3c of this license or (at your option) any later
+version. The latest version of this license is in:
+
+http://www.latex-project.org/lppl.txt
+
+and version 1.3 or later is part of all distributions of
+LaTeX version 2005/12/01 or later.
+
+This work has the LPPL maintenance status `maintained'.
+
+The Current Maintainer of this work is Innocent.
+
+This work consists of the files SYSUDaily.dtx,
+and README.md.
+
+\endpreamble
+
+\generate{
+    \file{\jobname.sty}        {\from{\jobname.dtx}{package}}
+    %<*internal>
+    \file{\jobname.ins}        {\from{\jobname.dtx}{install}}
+    %</internal>
+    \nopreamble\nopostamble
+    \file{README.md}           {\from{\jobname.dtx}{readme}}
+}
+
+\obeyspaces
+
+\endbatchfile
+%</install>
+%
+%<*internal>
+\fi
+%</internal>
+%
+%<class|package>\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+%<*!(driver|install)>
+%<!readme>\GetIdInfo $Id: SYSUDaily.dtx 0.3 2025-10-28 12:00:00Z Innocent <InnocentFIVE@outlook.com> $
+%<package>  {SYSUDaily}
+%<package>\ProvidesExplPackage{\ExplFileName}
+%<package>{2025-11-09} {} {A package for `Daily Question' for School of Mathematics, Sun Yat-Sen University}
+%</!(driver|install)>
+%<*driver>
+% \PassOptionsToPackage{showframe}{geometry}
+
+
+\documentclass{fdudoc}
+\usepackage{xpatch}
+\usepackage{multicol}
+\usepackage{SYSUDaily}
+\usepackage{fixdif}
+\usepackage{lipsum}
+
+\ExplSyntaxOn
+
+\xpatchcmd \__codedoc_print_macroname:nN
+{ \__codedoc_get_hyper_target:xN }
+{ \__codedoc_get_hyper_target:eN }
+{ } { \patchfailed }
+\xpatchcmd \__codedoc_print_macroname:nN
+{
+    \tl_replace_all:Non \l__codedoc_tmpa_tl
+    { \c_catcode_other_space_tl }
+    { \fontspec_visible_space: }
+    \__codedoc_macroname_prefix:o \l__codedoc_tmpa_tl
+    \__codedoc_macroname_suffix:N #2
+}
+{ \tl_replace_all:NVn \l__codedoc_tmpa_tl
+    \c_catcode_other_space_tl
+    { \fontspec_visible_space: }
+    \__codedoc_print_macroname_aux:on
+    \l__codedoc_tmpa_tl
+    { \bool_if:NT #2 { \__codedoc_typeset_TF: } } }
+{ } { }
+\makeatletter
+\lstnewenvironment{fsyntax}[1][]{%
+    \lstset{style=style@syntax, #1}\vspace{-1.5ex}}{}
+
+\AtBeginEnvironment { fsyntax }
+{
+    \cs_set:Npn \lparen { \textup { ( } }
+    \cs_set:Npn \rparen { \textup { ) } }
+    \char_set_catcode_active:N |
+    \char_set_catcode_active:N <
+    \char_set_active_eq:NN | \orbar
+    \char_set_active_eq:NN < \syntaxopt@aux
+}
+\makeatother
+\ExplSyntaxOff
+
+
+
+
+
+\hypersetup{
+    pdftitle  = {中山大学数学学院「每日一题」模板},
+    pdfauthor = {Innocent, Panadol}}
+
+
+\title{\textbf{中山大学数学学院「每日一题」模板}}
+\author{Innocent, Panadol}
+
+\begin{document}
+\DocInput{\jobname.dtx}
+%<!--CODEDOC-->  \PrintChanges
+\end{document}
+%</driver>
+% \fi
+% 
+% \maketitle
+% \begin{abstract}
+%   \pkg{SYSUdaily}是一个旨在建立一个简单易用的中山大学数学学院%
+% 「每日一题」计划的排版渠道的框架，主要功能由宏包%
+% \pkg{SYSUDaily}实现。
+% \end{abstract}
+% \begin{documentation}
+% \section{介绍}
+% 最早的一版用于中山大学数学学院「每日一题」计划排版的\LaTeX{}模板由 Innocent 编
+% 写，在2023年10月投入最初的使用。2024年3月，Panadol重构了整个模板的代码，现在代
+% 码托管在GitHub上，由Innocent和Panadol共同维护。
+% 2025年10月，Innocent重构了整个模板的代码。
+
+% \section{安装}
+% \pkg{SYSUdaily}如今暂无上传CTAN的计划，因此需要手动安装。
+% \begin{enumerate}
+%   \item 从Github上下载\cls{SYSUDaily}的%
+%     \href{https://github.com/Arcanadol/SYSUDaily}{安装包}；
+%   \item 利用如下Shell命令提取宏包：
+% \begin{shellexample}
+%   xetex SYSUDaily.dtx
+% \end{shellexample}
+%   \item 将得到的\pkg{SYSUDaily.sty}文件复制到\TeX{}发行版的
+% 本地TDS根目录中对应的 |tex/latex/SYSUDaily| 文件夹内。
+%   \item 执行 |mktexlsr| 命令刷新文件名数据库以完成安装。
+% \end{enumerate}
+
+% \section{宏包选项}
+%  \begin{function}[added=2025-11-11]{lang}
+%   \begin{fsyntax}[emph={[1]lang}]
+%     lang = (*<\defaultval{Chinese}|English>*)
+%   \end{fsyntax}
+%   语言选项，\opt{English}选项下，标题命名和标语会与\opt{Chinese}下有区别。
+% \end{function}
+
+% \section{使用方法}
+% \subsection{\pkg{daily}环境}
+% \pkg{daily}环境是本模板主要实现的功能，使用方法为：
+% \begin{latexexample}
+%   \begin{daily}[参数]
+%     正文
+%   \end{daily}
+% \end{latexexample}
+% 方括号 \verb|[]| 中的参数的顺序不影响结果。参数列表如下：
+
+% \begin{function}{daily}
+% \begin{fsyntax}
+%     \begin{daily}(*\oarg{可选参数}*)
+%         内容
+%     \end{daily}
+% \end{fsyntax}
+% 排布每日一题。\oarg{可选参数}是一个用逗号隔离的参数列表，其中参数的顺序不影响结果。
+% 为了使用方便，我们并不适用 |key = value| 型的设置，而是利用参数的内容决定参数类型。
+% 以下是可能的参数类型。
+% \end{function}
+% 
+% \begin{function}{环境}
+% \begin{fsyntax}
+%     = (*<empty|theorem|definition|\defaultval{proposition}|lemma|corollary|fact|example|think|calculate|brain>*)
+% \end{fsyntax}
+% \end{function}
+% 仅需输入环境命名即可确定 |daily| 的环境, 
+% 选择如下：
+% \ExplSyntaxOn
+% \cs_new:Npn \TestColour #1 {
+%     { \fboxsep0pt \fbox { \colorbox { #1 } { \phantom { XX } } } }
+% }
+% \begin{multicols}{2}
+%     \begin{itemize}
+%         \seq_map_inline:Nn \c__SYSUDaily_math_styles_seq {
+%         \item [\TestColour{ __SYSUDaily_#1_color }]
+%               \texttt{#1}
+%               }
+%     \end{itemize}
+% \end{multicols}
+% \ExplSyntaxOff
+% 下面是一个实例。
+% \begin{multicols}{2}
+% \begin{latexexample}
+%   \begin{daily}[theorem]
+%       这是一个定理。
+%   \end{daily}
+% \end{latexexample}
+%     \small
+%   \begin{daily}[theorem]
+%       这是一个定理。
+%   \end{daily}
+% \end{multicols}
+% 
+% \begin{function}{日期}
+% \begin{fsyntax}
+%     = (*\defaultval{\cs{today}}*)
+% \end{fsyntax}
+% 日期为8、6、4位整数：\verb|20101225|、\verb|101225|、\verb|1225| 分别代表三种不同的日期输入风格。
+% \end{function}
+% \begin{multicols}{2}
+%     % \footnotesize
+%     \begin{latexexample}
+%   \begin{daily}[theorem,19111225]
+%       那是一个遥远的圣诞夜。
+%   \end{daily}
+%   \end{latexexample}
+%     \small
+%     \begin{daily}[theorem,19111225]
+%       那是一个遥远的圣诞夜。
+%     \end{daily}
+% \end{multicols}
+% \begin{multicols}{2}
+%     % \footnotesize
+%     \begin{latexexample}
+%   \begin{daily}[111225]
+%       我忘不了那年的圣诞节。
+%   \end{daily}
+%   \end{latexexample}
+%     \small
+%     \begin{daily}[111225]
+%         我忘不了那年的圣诞节。
+%     \end{daily}
+% \end{multicols}
+% \begin{multicols}{2}
+%     \begin{latexexample}
+%   \begin{daily}[1225]
+%       今年的圣诞节，还要多久？
+%   \end{daily}
+%   \end{latexexample}
+%     \small
+%     \begin{daily}[1225]
+%         今年的圣诞节，还要多久？
+%     \end{daily}
+% \end{multicols}
+% 日期未设置时，默认为当天日期 \verb|\today|：
+% \begin{multicols}{2}
+%     \begin{latexexample}
+%   \begin{daily}
+%       今天是\today{}，不是么?
+%   \end{daily}
+%   \end{latexexample}
+%     \small
+%     \begin{daily}
+%         今天是\today{}，不是么?
+%     \end{daily}
+% \end{multicols}
+% \begin{function}{难度}
+%     \begin{fsyntax}
+%     = (*<\defaultval{0}|1|2|3|4>*)
+%     \end{fsyntax}
+%   难度为0--4的整数，其产生的效果是在\pkg{tcolorbox}绘制的盒子左边绘制对应数量的星星。
+% \end{function}
+% \begin{daily}[theorem,4]
+%     这是最高难度的题目。
+% \end{daily}
+
+% \begin{function}{标题}
+% 不是可选难度的非数字参数均视为标题，这样的参数可能有多个，我们仅以第一个为准。
+% \end{function}
+
+% 以下是一个完整的例子：
+% \begin{latexexample}
+%   \begin{daily}[重要极限,不重要极限,20251112,1,lemma]
+%   计算如下极限：
+%   \[
+%       \lim _ { x \to 0 } \frac { \sin x } { x }.
+%   \]
+%   \end{daily}
+% \end{latexexample}
+%   \begin{daily}[重要极限,不重要极限,20251112,1,lemma]
+%   计算如下极限：
+%   \[
+%       \lim _ { x \to 0 } \frac { \sin x } { x }.
+%   \]
+%   \end{daily}
+
+
+% \end{documentation}
+
+% \EnableImplementation
+% \begin{implementation}
+% \newgeometry{
+%   left      = 1 in,
+%   right     = 1.00 in,
+%   top       = 1.25 in,
+%   bottom    = 1.00 in,
+%   marginpar = 2.25 in
+% }
+% \section{实现细节}
+%    \begin{macrocode}
+%<@@=SYSUDaily>
+%<*package>
+%    \end{macrocode}
+%    
+% 首先是检查 \LaTeX3 环境.
+%    \begin{macrocode}
+\RequirePackage { xtemplate, l3keys2e }
+\msg_new:nnn { SYSUDaily } { l3-too-old }
+{
+    Package~ `#1'~ is~ too~ old. \\\\
+    Please~ update~ an~ up-to-date~ version~ of~ the~ bundles \\
+    `l3kernel'~ and~ `l3packages'~ using~ your~ TeX~ package \\
+    manager~ or~ from~ CTAN.
+}
+\clist_map_inline:nn { xtemplate, l3keys2e }
+{
+    \@ifpackagelater {#1} { 2020/07/17 }
+    { } { \msg_error:nnn { SYSUDaily } { l3-too-old } {#1} }
+}
+%    \end{macrocode}
+% \subsection{内部变量声明}
+% 所有变量名中包含 |tmpa| / |tmpb| 的，均为临时变量。
+% 变量名中包含 |low| 的，仅在盒子高度较低时起效，
+% 变量名中包含 |high| 的，仅在盒子高度较高时起效。
+%    \begin{macrocode}
+\int_new:N \g_@@_counter_int
+\int_new:N \l_@@_box_tmpa_difficulty_int
+%    \end{macrocode}
+% 在盒子高度较高时，\pkg{tcolorbox}盒子右端填充与默认一致，
+% 盒子高度较低时，由于水印在盒子右边排版，此时盒子右端填充需要手动设置。
+%    \begin{macrocode}
+\dim_new:N \g_@@_box_right_low_dim
+\dim_new:N \g_@@_box_right_high_dim
+\dim_set:Nn \g_@@_box_right_high_dim { 2mm }
+\dim_new:N \g_@@_box_indent_dim
+\dim_new:N \g_@@_box_width_dim
+\dim_new:N \g_@@_box_watermark_high_text_width_dim
+\dim_new:N \g_@@_box_watermark_low_text_width_dim
+
+\bool_new:N \c_@@_chinese_bool
+\bool_new:N \g_@@_box_numbering_bool
+\bool_new:N \g_@@_show_date_bool
+\bool_new:N \g_@@_show_title_bool
+
+\tl_new:N \g_@@_box_punctuation_after_title_tl
+\tl_new:N \g_@@_box_after_title_tl
+\tl_new:N \g_@@_box_watermark_high_text_tl
+\tl_new:N \g_@@_box_watermark_low_text_tl
+\tl_new:N \g_@@_box_before_watermark_high_text_tl
+\tl_new:N \g_@@_box_before_watermark_low_text_tl
+\tl_new:N \g_@@_box_after_watermark_high_text_tl
+\tl_new:N \g_@@_box_after_watermark_low_text_tl
+\tl_new:N \g_@@_box_watermark_high_tl
+\tl_new:N \g_@@_box_watermark_low_tl
+\tl_new:N \g_@@_difficulty_symbol_tl
+\tl_new:N \l_@@_box_tmpa_title_tl
+\tl_new:N \l_@@_box_tmpa_date_tl
+%    \end{macrocode}
+% 
+% 为了颜色设置上的方便，我们让颜色混合值是一个标记列表而非浮点数，这样便可以通过
+% 诸如 |!0!cyan| 的标记列表直接修改对应的颜色。
+%    \begin{macrocode}
+\tl_new:N \g_@@_box_background_color_mixing_tl
+\tl_set:Nn \g_@@_box_background_color_mixing_tl { 3 }
+\tl_new:N \g_@@_box_frame_color_mixing_tl
+\tl_set:Nn \g_@@_box_frame_color_mixing_tl { 30 }
+\tl_new:N \g_@@_box_tilte_color_mixing_tl
+\tl_set:Nn \g_@@_box_tilte_color_mixing_tl { 100 }
+\tl_new:N \g_@@_box_watermark_high_color_mixing_tl
+\tl_set:Nn \g_@@_box_watermark_high_color_mixing_tl { 100 }
+\tl_new:N \g_@@_box_watermark_low_color_mixing_tl
+\tl_set:Nn \g_@@_box_watermark_low_color_mixing_tl { 100 }
+\tl_new:N \g_@@_box_default_mathstyle_tl
+\tl_new:N \g_@@_solution_name_tl
+%    \end{macrocode}
+% 
+% 为了在排入\pkg{tcolorbox}盒子之前辨别高度，我们需要一个特殊的临时盒子。
+%    \begin{macrocode}
+\box_new:N \l_@@_tmpa_box
+\box_new:N \l_@@_tmpa_measure_box
+
+\seq_new:N \l_@@_tmpa_seq
+\seq_new:N \c_@@_math_styles_seq
+\seq_new:N \c_@@_math_styles_name_seq
+
+\fp_new:N \l_@@_watermark_opacity_fp
+\fp_set:Nn \l_@@_watermark_opacity_fp { 0.5 }
+\fp_new:N \l_@@_watermark_low_opacity_fp
+\fp_set:Nn \l_@@_watermark_low_opacity_fp { 0.5 }
+\fp_new:N \l_@@_watermark_high_opacity_fp
+\fp_set:Nn \l_@@_watermark_high_opacity_fp { 0.1 }
+\fp_new:N \g_@@_watermark_low_xscale_fp
+\fp_set:Nn \g_@@_watermark_low_xscale_fp { 1 }
+\fp_new:N \g_@@_watermark_high_xscale_fp
+\fp_set:Nn \g_@@_watermark_high_xscale_fp { 1 }
+\fp_new:N \g_@@_watermark_low_yscale_fp
+\fp_set:Nn \g_@@_watermark_low_yscale_fp { 1 }
+\fp_new:N \g_@@_watermark_high_yscale_fp
+\fp_set:Nn \g_@@_watermark_high_yscale_fp { 1 }
+
+\cs_new:Nn \_@@_CJKecglue: { }
+\cs_new:Nn \_@@_box_watermark_low_text_format: { }
+\cs_new:Nn \_@@_box_watermark_high_text_format: { }
+\cs_new:Nn \_@@_box_watermark_high_align: { }
+\cs_new:Nn \_@@_box_watermark_low_align: { }
+%    \end{macrocode}
+% \subsection{宏包载入}
+%    \begin{macrocode}
+\RequirePackage [ skins, most, breakable ] { tcolorbox }
+\RequirePackage { amsmath , amssymb , amsthm }
+%    \end{macrocode}
+% \subsection{键值设置}
+%    \begin{macrocode}
+\keys_define:nn { SYSUDaily } {
+    language                  .choices:nn = { chinese, english } {
+    \str_case:nn { #1 } {
+            { chinese } { \bool_gset_true:N \c_@@_chinese_bool }
+            { english } { \bool_gset_false:N \c_@@_chinese_bool }
+        }
+    },
+    language                  .initial:n  = chinese,
+    title / show              .bool_set:N = \g_@@_show_title_bool,
+    title / show              .initial:n  = true,
+    title / date              .bool_set:N = \g_@@_show_date_bool,
+    title / date              .initial:n  = true,
+    title / numbering         .bool_set:N = \g_@@_box_numbering_bool,
+    title / numbering         .initial:n  = true,
+    box / width               .dim_set:N  = \g_@@_box_width_dim,
+    box / width               .initial:n  = 0.8 \textwidth,
+    box / default-style       .tl_set:N   = \g_@@_box_default_mathstyle_tl,
+    box / default-style       .initial:n  = proposition,
+    title / punctuation       .tl_set:N   = \g_@@_box_punctuation_after_title_tl,
+    title / after             .tl_set:N   = \g_@@_box_after_title_tl,
+    box / indent              .dim_set:N  = \g_@@_box_indent_dim,
+    box / low / padding-right .dim_set:N  = \g_@@_box_right_low_dim,
+    background / symbol       .tl_set:N   = \g_@@_difficulty_symbol_tl,
+    background / symbol       .initial:n  = { $ \bigstar $ },
+    background / mixing       .tl_set:N   = \g_@@_box_background_color_mixing_tl,
+    frame / mixing            .tl_set:N   = \g_@@_box_frame_color_mixing_tl,
+    title / mixing            .tl_set:N   = \g_@@_box_tilte_color_mixing_tl,
+    watermark / high / text   .tl_set:N   = \g_@@_box_watermark_high_text_tl,
+    watermark / low / text    .tl_set:N   = \g_@@_box_watermark_low_text_tl,
+    watermark / high / align  .choices:nn = { left, right, center } {
+    \str_case:nn { #1 } {
+            { left }    { \cs_set:Nn \_@@_box_watermark_high_align: { \raggedright } }
+            { right }   { \cs_set:Nn \_@@_box_watermark_high_align: { \raggedleft } }
+            { center }  { \cs_set:Nn \_@@_box_watermark_high_align: { \centering } }
+        }
+    },
+    watermark / high / align  .initial:n  = center,
+    watermark / low / align   .choices:nn = { left, right, center } {
+    \str_case:nn { #1 } {
+            { left }    { \cs_set:Nn \_@@_box_watermark_low_align: { \raggedright } }
+            { right }   { \cs_set:Nn \_@@_box_watermark_low_align: { \raggedleft } }
+            { center }  { \cs_set:Nn \_@@_box_watermark_low_align: { \centering } }
+        }
+    },
+    watermark / low / align   .initial:n  = right,
+    watermark / low / width   .dim_set:N  = \g_@@_box_watermark_low_text_width_dim,
+    watermark / high / width  .dim_set:N  = \g_@@_box_watermark_high_text_width_dim,
+    watermark / high / width  .dim_set:N  = \g_@@_box_watermark_high_text_width_dim,
+    watermark / low / scale   .code:n     = {
+            \fp_set:Nn \g_@@_watermark_low_xscale_fp { #1 }
+            \fp_set:Nn \g_@@_watermark_low_yscale_fp { #1 }
+        },
+    watermark / high / scale  .code:n     = {
+            \fp_set:Nn \g_@@_watermark_high_xscale_fp { #1 }
+            \fp_set:Nn \g_@@_watermark_high_yscale_fp { #1 }
+        },
+    watermark / low / xscale  .dim_set:N  = \g_@@_watermark_low_xscale_fp,
+    watermark / low / yscale  .dim_set:N  = \g_@@_watermark_low_yscale_fp,
+    watermark / high / xscale .dim_set:N  = \g_@@_watermark_high_xscale_fp,
+    watermark / high / yscale .dim_set:N  = \g_@@_watermark_high_yscale_fp,
+    watermark / low / before  .tl_set:N   = \g_@@_box_before_watermark_low_text_tl,
+    watermark / low / after   .tl_set:N   = \g_@@_box_after_watermark_low_text_tl,
+    watermark / high / before .tl_set:N   = \g_@@_box_before_watermark_high_text_tl,
+    watermark / high / after  .tl_set:N   = \g_@@_box_after_watermark_high_text_tl,
+    watermark / low / format  .cs_set:Np  = \_@@_box_watermark_low_text_format:,
+    watermark / high / format .cs_set:Np  = \_@@_box_watermark_high_text_format:,
+    solution  / name          .tl_set:N   = \g_@@_solution_name_tl
+}
+\ProcessKeyOptions [ SYSUDaily ]
+\NewDocumentCommand { \SYSUDailySetup } { m } {
+    \keys_set:nn { SYSUDaily } { #1 }
+}
+%    \end{macrocode}
+% \subsection{中英文设置}
+%    \begin{macrocode}
+\bool_if:NTF \c_@@_chinese_bool {
+    \IfClassLoadedTF { ctexart } { } {
+        \IfClassLoadedTF { ctexbook } { } {
+            \IfClassLoadedTF { ctexbeamer } { } {
+                \RequirePackage { ctex }
+            }
+        }
+    }
+    \sys_if_engine_uptex:T
+    { \cs_set:Nn \_@@_CJKecglue: { \skip_horizontal:N \tex_xkanjiskip:D } }
+    { \cs_set:Nn \_@@_CJKecglue: { \CJKecglue } }
+    \seq_set_from_clist:Nn \c_@@_math_styles_name_seq {
+        定理, 定义, 命题, 引理, 
+        推论, 事实, 例子, 思考题, 
+        计算题, 脑筋急转弯, { }
+    }
+    \dim_set:Nn \g_@@_box_watermark_low_text_width_dim { 4em }
+    \dim_set:Nn \g_@@_box_watermark_high_text_width_dim { 150 pt }
+    \dim_set:Nn \g_@@_box_right_low_dim { 5em + 2mm }
+    \dim_set:Nn \g_@@_box_indent_dim { 2 \ccwd }
+    \tl_set:Nn \g_@@_box_punctuation_after_title_tl { ： }
+    \tl_set:Nn \g_@@_box_after_title_tl { }
+    \tl_set:Nn \g_@@_box_watermark_low_text_tl { 笃学笃行 \\ 不悔不倦 }
+    \tl_set:Nn \g_@@_box_watermark_high_text_tl { 笃学笃行，不悔不倦。 }
+    \tl_set:Nn \g_@@_box_before_watermark_high_text_tl { \tex_hss:D }
+    \tl_set:Nn \g_@@_box_before_watermark_low_text_tl { \tex_hss:D
+        \tex_vrule:D \@width 0.8pt
+        \skip_horizontal:n { 1mm } }
+    \tl_set:Nn \g_@@_box_after_watermark_low_text_tl { \skip_horizontal:n { 1.5 ex } }
+    \tl_set:Nn \g_@@_solution_name_tl { 解 }
+    \cs_set:Nn \_@@_box_watermark_low_text_format: { \bfseries }
+    \cs_set:Nn \_@@_box_watermark_high_text_format: { \bfseries }
+    \cs_set:Nn \_@@_set_date_format_aux:Nnnnnnnnn {
+        \tl_set:Nn #1 {
+            #2 #3 #4 #5
+            \cs_if_eq:NNF #5 \scan_stop: {
+                \l__zhnum_arabic_sep_tl \zhnum_output:n { year }
+            }
+            \l__zhnum_arabic_sep_tl
+            \_@@_remove_zero_from_head:n { #6 } { #7 }
+            \l__zhnum_arabic_sep_tl
+            \zhnum_output:n { month }
+            \l__zhnum_arabic_sep_tl
+            \_@@_remove_zero_from_head:n { #8 } { #9 }
+            \l__zhnum_arabic_sep_tl
+            \zhnum_output:n { day }
+        }
+    }
+
+} {
+    \seq_set_from_clist:Nn \c_@@_math_styles_name_seq {
+        Theorem, Definition, Proposition, Lemma, 
+        Corollary, Fact, Example, Thought-provoking~ question, 
+        Calculation~ question, Brain~ teaser, { }
+    }
+    \dim_set:Nn \g_@@_box_right_low_dim { 7em + 2mm }
+    \dim_set:Nn \g_@@_box_indent_dim { 2 em }
+    \tl_set:Nn \g_@@_box_punctuation_after_title_tl { : }
+    \tl_set:Nn \g_@@_box_after_title_tl { \tex_space:D }
+    \cs_set:Nn \_@@_box_watermark_low_text_format: { \linespread{1} \large \scshape }
+    \cs_set:Nn \_@@_box_watermark_high_text_format: { \linespread{1} \Huge \bfseries }
+    \tl_set:Nn \g_@@_box_watermark_low_text_tl {
+        { \footnotesize T~h~e }
+        \vbox_to_zero:n { \hbox_overlap_left:n { \color{ . ! 20 } \Huge \bfseries SYSU } } \\
+        \skip_vertical:n { -0.4 ex }
+        \color{ . ! 100 } School~ of \\
+        Mathematics
+    }
+    \tl_set:Nn \g_@@_box_watermark_high_text_tl { Duxing }
+    \tl_set:Nn \g_@@_box_before_watermark_low_text_tl { \tex_hss:D }
+    \tl_set:Nn \g_@@_box_after_watermark_low_text_tl { 
+        \skip_horizontal:n { 1mm } \color { . } 
+        \tex_vrule:D \@width 0.8pt 
+        \skip_horizontal:n { 3mm } 
+    }
+    \tl_set:Nn \g_@@_solution_name_tl { Solution }
+    \dim_set:Nn \g_@@_box_watermark_low_text_width_dim { 100 pt }
+    \dim_set:Nn \g_@@_box_watermark_high_text_width_dim { 150 pt }
+    \fp_set:Nn \g_@@_watermark_low_xscale_fp { 0.75 }
+    \fp_set:Nn \g_@@_watermark_low_yscale_fp { 0.75 }
+    \cs_set:Nn \_@@_set_date_format_aux:Nnnnnnnnn {
+        \tl_set:Nn #1 {
+            \int_if_zero:nTF { #6 #7 } {
+                \int_if_zero:nTF { #8 #9 } { \O } {
+                    --- The~ \_@@_remove_zero_from_head:n { #8 } { #9 }
+                    \int_case:nnF { #9 } {
+                        { 1 } { \textsuperscript { st } }
+                            { 2 } { \textsuperscript { nd } }
+                            { 3 } { \textsuperscript { rd } }
+                    } { \textsuperscript { th } }
+                    \tex_space:D day
+                },~ #2 #3 #4 #5
+            } {
+                \int_case:nnTF { #6 #7 } {
+                    { 1 } { January }
+                        { 2 } { February }
+                        { 3 } { March }
+                        { 4 } { April }
+                        { 5 } { May }
+                        { 6 } { June }
+                        { 7 } { July }
+                        { 8 } { August }
+                        { 9 } { September }
+                        { 10 } { October }
+                        { 11 } { November }
+                        { 12 } { December }
+                } { } {
+                    --- The~ \_@@_remove_zero_from_head:n { #6 } { #7 }
+                    \int_case:nnF { #7 } {
+                        { 1 } { \textsuperscript { st } }
+                            { 2 } { \textsuperscript { nd } }
+                            { 3 } { \textsuperscript { rd } }
+                    } { \textsuperscript { th } }
+                    \tex_space:D month,
+                }
+                \tex_space:D
+                \int_if_zero:nTF { #8 #9 } { \O } { #8 #9 }
+                ,~ #2 #3 #4 #5
+            }
+        }
+    }
+}
+
+\int_step_inline:nn { \seq_count:N \c_@@_math_styles_seq } {
+    \tl_set:cn { g_@@_box_ \seq_item:Nn \c_@@_math_styles_seq { #1 } _name_tl }
+    { \seq_item:Nn \c_@@_math_styles_name_seq { #1 } }
+}
+%    \end{macrocode}  
+%  
+% \subsection{\pkg{SYSUDaily}环境}
+% 定义如下十一个预设环境及对应颜色。
+%    \begin{macrocode}
+\seq_set_from_clist:Nn \c_@@_math_styles_seq {
+    theorem, definition, proposition, lemma, 
+    corollary, fact, example, think, calculate, 
+    brain, empty
+}
+\definecolor { _@@_theorem_color } { RGB } { 12, 12, 150 }
+\definecolor { _@@_definition_color } { RGB } { 220, 20, 60 }
+\definecolor { _@@_proposition_color } { RGB } { 32, 115, 54 }
+\definecolor { _@@_lemma_color } { RGB } { 0, 169, 153 }
+\definecolor { _@@_corollary_color } { RGB } { 70, 130, 180 }
+\definecolor { _@@_fact_color } { RGB } { 119, 136, 153 }
+\definecolor { _@@_example_color } { RGB } { 255, 182, 193 }
+\definecolor { _@@_think_color } { RGB } { 30, 144, 255 }
+\definecolor { _@@_calculate_color } { RGB } { 139, 69, 19 }
+\definecolor { _@@_brain_color } { RGB } { 0, 127, 127 }
+\definecolor { _@@_empty_color } { RGB } { 0, 0, 0 }
+%    \end{macrocode}
+% 调整关于环境的键值设置。
+%    \begin{macrocode}
+\seq_map_inline:Nn \c_@@_math_styles_seq {
+    \keys_define:nn { SYSUDaily } {
+        daily / #1 / name .code:n = {
+                \tl_set:cn { g_@@_box_ #1 _name_tl } { ##1 }
+            },
+        daily / #1 / color .code:n = {
+                \colorlet { _@@_ #1 _color } { ##1 }
+            }
+    }
+}
+%    \end{macrocode}
+% \subsection{\pkg{SYSUDaily}盒子}
+% 首先利用\pkg{tcolorbox}设置盒子的共性。
+%    \begin{macrocode}
+\tcbset {
+    mathstyles / .style = {
+        before                 = { \medskip \tex_par:D \tex_noindent:D },
+        after                  = { \skip_vertical:n { -3pt } },
+        enhanced,
+        toprule                = 3pt,
+        fonttitle              = \bfseries,
+        fontupper              = \slshape,
+        arc                    = 0mm,
+        outer~ arc             = 0mm,
+        before~ skip~ balanced = 2mm,
+        after~ skip~ balanced  = 3mm,
+        boxrule                = 1pt,
+        left                   = 3mm,
+        top                    = 1mm,
+        bottom                 = 1mm,
+        lefttitle              = 0pt,
+        righttitle             = 0pt,
+        height~ from           = 6em~ to~ \paperheight,
+        colback                = _@@_ #1 _color ! 
+                                 \tl_use:N \g_@@_box_background_color_mixing_tl,
+        colframe               = _@@_ #1 _color ! 
+                                 \tl_use:N \g_@@_box_frame_color_mixing_tl,
+        coltitle               = _@@_ #1 _color ! 
+                                 \tl_use:N \g_@@_box_tilte_color_mixing_tl,
+        watermark~ zoom        = 1,
+    }
+}
+%    \end{macrocode}
+%    
+% 用来放置代表难度的星星的命令，未来可能会使用\pkg{l3draw}实现。
+%    \begin{macrocode}
+\cs_new:Nn \_@@_put_stars:nn {
+    \begin{tcbclipinterior}
+        \hbox_set:Nn \l_@@_tmpa_box {
+            \footnotesize
+            \color{ _@@_ #1 _color }
+            \int_step_inline:nn { #2 } { \tl_use:N \g_@@_difficulty_symbol_tl }
+        }
+        \box_rotate:Nn \l_@@_tmpa_box { -90 }
+        \path [ fill = none, draw = none ]
+        ( interior . south~ west ) rectangle~ node [ white ]
+            { \box_use:N \l_@@_tmpa_box }
+        ( [ xshift = 4mm ] interior . north~ west );
+    \end{tcbclipinterior}
+}
+%    \end{macrocode}
+%    
+% 用来排版盒子标题的命令。
+%    \begin{macrocode}
+\cs_new:Nn \_@@_box_parse_for_title:nnn {
+    \bfseries
+    \textsc { \use:c { g_@@_box_ #1 _name_tl } }
+    \bool_if:NTF \c_@@_chinese_bool { } { ~ }
+    \exp_args:Nf
+    \IfBlankTF { #2 } { } {
+        \bool_if:NT \g_@@_box_numbering_bool {
+            \int_add:Nn \g_@@_counter_int { 1 }
+            \int_use:N \g_@@_counter_int
+        }
+        \tl_use:N \g_@@_box_punctuation_after_title_tl
+        \tl_use:N \g_@@_box_after_title_tl
+        #2
+    }
+    \tex_hfill:D
+    #3
+}
+%    \end{macrocode}
+% 
+% 当 |\g_@@_show_title_bool| 为 |false| 时，我们会借助禅盒子进行排版，此时需要保留除了标题外的一切。% 
+%    \begin{macrocode}
+\newtcolorbox { _@@_box } [ 8 ] {
+    mathstyles         = #1,
+    title              = \_@@_box_parse_for_title:nnn { #1 } { #4 } { #2 } 
+                         \tex_kern:D -#6,
+    watermark~ text    = { #5 },
+    underlay           = { \_@@_put_stars:nn { #1 } { #3 } },
+    watermark~ color   = _@@_ #1 _color ! #8,
+    watermark~ opacity = #7,
+    right              = { #6 }
+}
+
+\newtcolorbox { _@@_box_empty } [ 8 ] {
+    mathstyles         = #1,
+    watermark~ text    = { #5 },
+    underlay           = { \_@@_put_stars:nn { #1 } { #3 } },
+    watermark~ color   = _@@_ #1 _color ! #8,
+    watermark~ opacity = #7,
+    right              = { #6 }
+}
+%    \end{macrocode}
+% 
+% 分析填入的可选参数。
+%    \begin{macrocode}
+\cs_new:Nn \_@@_box_check:nnnnn {
+    \seq_if_in:NnTF \c_@@_math_styles_seq { #1 } {
+        \tl_set:Nn #2 { #1 }
+    } {
+%    \end{macrocode}
+% 需要用正则来检测整数，然后才能判断大小。
+%    \begin{macrocode}
+        \regex_match:nnTF { ^\d+$ } { #1 } {
+            \int_compare:nTF {
+                #1 > 100
+            } {
+                \SYSUDaily_set_date_format:Nn #3 { #1 }
+            } {
+                \int_compare:nTF {
+                    #1 < 5
+                } {
+                    \int_set:Nn #4 { #1 }
+                } { }
+            }
+        } {
+%    \end{macrocode}
+% 并非属于 |\c_@@_math_styles_seq| 的非整数参数将视为标题。
+%    \begin{macrocode}
+            \tl_set:Nn #5 { #1 }
+        }
+    }
+}
+%    \end{macrocode}
+% 调整日期的格式。
+%    \begin{macrocode}
+\cs_set:Npn \_@@_remove_zero_from_head:n #1 #2 {
+    \int_compare:nTF { #1 = 0 } { #2 } { #1 #2 }
+}
+\cs_new:Nn \SYSUDaily_set_date_format:Nn {
+    \bool_if:NT \g_@@_show_date_bool {
+        \int_case:nnF { \tl_count:n { #2 } } {
+            { 4 } { \_@@_set_date_format_aux:Nnnnnnnnn #1 
+                    \scan_stop: \scan_stop: \scan_stop: \scan_stop: #2 }
+            { 6 } { \_@@_set_date_format_aux:Nnnnnnnnn #1 
+                        \scan_stop: \scan_stop: #2 }
+            { 8 } { \_@@_set_date_format_aux:Nnnnnnnnn #1 #2 }
+        } {
+            \tl_set:Nn #1 { }
+        }
+    }
+}
+%    \end{macrocode}
+% 最后排版。
+%    \begin{macrocode}
+\cs_set:Nn \_@@_box_high_aux:nnnnn {
+    \str_if_eq:nnTF { #1 } { empty } {
+        \begin { _@@_box_empty } { empty } { } { 0 } { } { }
+        { 2mm } { } { 0 }
+        #5
+        \end { _@@_box_empty }
+    } {
+        \bool_if:NTF \g_@@_show_title_bool 
+        { \begin { _@@_box } } { \begin { _@@_box_empty } }
+        { #1 } { #2 } { #3 } { #4 }
+        { \tl_use:N \g_@@_box_watermark_high_tl }
+        { \dim_use:N \g_@@_box_right_high_dim }
+        { \fp_use:N \l_@@_watermark_high_opacity_fp }
+        { \tl_use:N \g_@@_box_watermark_high_color_mixing_tl }
+        #5
+        \bool_if:NTF \g_@@_show_title_bool 
+        { \end { _@@_box } } { \end { _@@_box_empty } }
+    }
+}
+
+\cs_set:Nn \_@@_box_low_aux:nnnnn {
+    \str_if_eq:nnTF { #1 } { empty } {
+        \begin { _@@_box_empty } { empty } { } { 0 } { } { }
+        { 2mm } { } { 0 }
+        #5
+        \end { _@@_box_empty }
+    } {
+        \bool_if:NTF \g_@@_show_title_bool 
+        { \begin { _@@_box } } { \begin { _@@_box_empty } }
+        { #1 } { #2 } { #3 } { #4 }
+        { \tl_use:N \g_@@_box_watermark_low_tl }
+        { \dim_use:N \g_@@_box_right_low_dim }
+        { \fp_use:N \l_@@_watermark_low_opacity_fp }
+        { \tl_use:N \g_@@_box_watermark_low_color_mixing_tl }
+        #5
+        \bool_if:NTF \g_@@_show_title_bool 
+        { \end { _@@_box } } { \end { _@@_box_empty } }
+    }
+}
+
+\NewDocumentEnvironment { daily } { O { } +b } {
+    \group_begin:
+    \hbox_set:Nn \l_@@_tmpa_measure_box {
+        \begin{minipage} { \g_@@_box_width_dim }
+            \slshape #2
+        \end{minipage}
+    }
+    \seq_set_from_clist:Nn \l_@@_tmpa_seq { #1 }
+    \bool_if:NT \g_@@_show_date_bool {
+        \tl_set:Ne \l_@@_box_tmpa_date_tl { \today }
+    }
+    \tl_set:Nn \l_@@_box_tmpa_mathstyle_tl 
+    { \tl_use:N \g_@@_box_default_mathstyle_tl }
+    \seq_reverse:N \l_@@_tmpa_seq
+    \seq_map_inline:Nn \l_@@_tmpa_seq {
+        \_@@_box_check:nnnnn { ##1 }
+        { \l_@@_box_tmpa_mathstyle_tl }
+        { \l_@@_box_tmpa_date_tl }
+        { \l_@@_box_tmpa_difficulty_int }
+        { \l_@@_box_tmpa_title_tl }
+    }
+%    \end{macrocode}
+% 由于临时变量的原因，我们需要传值而非临时变量本身，因此在调用函数之前需要将其展开。
+%    \begin{macrocode}
+    \tex_expanded:D {
+        \exp_args:Nf \dim_compare:nTF { \box_ht:N \l_@@_tmpa_measure_box > 26 pt }
+        { \exp_not:N \_@@_box_high_aux:nnnnn }
+        { \exp_not:N \_@@_box_low_aux:nnnnn }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w 
+          \tl_use:N \l_@@_box_tmpa_mathstyle_tl } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w 
+          \tl_use:N \l_@@_box_tmpa_date_tl } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w 
+          \int_use:N \l_@@_box_tmpa_difficulty_int } }
+        { \__kernel_exp_not:w \exp_after:wN { \exp:w \exp_end_continue_f:w 
+          \tl_use:N \l_@@_box_tmpa_title_tl } }
+    } {
+        \dim_set_eq:NN \tex_parindent:D \g_@@_box_indent_dim
+        \tex_noindent:D
+        #2
+    }
+    \group_end:
+} { }
+\NewDocumentEnvironment { solution } { } {
+    \begin { proof } [ \tl_use:N \g_@@_solution_name_tl ]
+        \slshape
+} { \end { proof } }
+%    \end{macrocode}
+% \subsection{水印}
+% 当盒子高度较低时，水印置右端排布，盒子高度较高时，水印置中心排布。
+%    \begin{macrocode}
+\tl_set:Nn \g_@@_box_watermark_low_tl {
+    \_@@_box_watermark_low_text_format:
+    \hbox_set:Nn \l_@@_tmpa_box {
+        \tl_use:N \g_@@_box_before_watermark_low_text_tl
+        \parbox
+        { \g_@@_box_watermark_low_text_width_dim }
+        { \_@@_box_watermark_low_align: 
+        \tl_use:N \g_@@_box_watermark_low_text_tl }
+        \tl_use:N \g_@@_box_after_watermark_low_text_tl
+    }
+    \box_scale:Nnn \l_@@_tmpa_box
+    { \g_@@_watermark_low_xscale_fp  }
+    { \g_@@_watermark_low_yscale_fp }
+    \hbox_to_wd:nn { \textwidth } {
+        \tex_hss:D
+        \box_use:N \l_@@_tmpa_box
+    }
+}
+
+\tl_set:Nn \g_@@_box_watermark_high_tl {
+    \_@@_box_watermark_high_text_format:
+    \hbox_set:Nn \l_@@_tmpa_box {
+        \tl_use:N \g_@@_box_before_watermark_high_text_tl
+        \parbox
+        { \g_@@_box_watermark_high_text_width_dim }
+        { \_@@_box_watermark_high_align: 
+        \tl_use:N \g_@@_box_watermark_high_text_tl }
+        \tl_use:N \g_@@_box_after_watermark_high_text_tl
+    }
+    \box_scale:Nnn \l_@@_tmpa_box
+    { \g_@@_watermark_high_xscale_fp  }
+    { \g_@@_watermark_high_yscale_fp }
+    \box_use:N \l_@@_tmpa_box
+}
+%</package>
+%<@@=>
+%    \end{macrocode}
+% \end{implementation}
